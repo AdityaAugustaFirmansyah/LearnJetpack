@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.navigation.NavController;
 import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,8 +26,11 @@ public class AdapterPage extends PagedListAdapter<ModelFilm.Result,AdapterPage.H
         }
     };
 
-    protected AdapterPage() {
+    public NavController navController;
+
+    protected AdapterPage(NavController navController) {
         super(diffCallback);
+        this.navController = navController;
     }
 
     @NonNull
@@ -50,6 +54,14 @@ public class AdapterPage extends PagedListAdapter<ModelFilm.Result,AdapterPage.H
             if (itemFilmBinding != null) {
                 itemFilmBinding.setDataFilm(modelFilm);
             }
+            itemFilmBinding.linearFilm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+//                    Navigation.createNavigateOnClickListener(R.id.action_movieFragment_to_detailFragment);
+//                    Navigation.findNavController(view).navigate(R.id.action_movieFragment_to_detailFragment);
+                    navController.navigate(R.id.action_baseFragment2_to_detailFragment);
+                }
+            });
         }
     }
 }

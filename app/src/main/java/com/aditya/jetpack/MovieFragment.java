@@ -13,6 +13,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -70,10 +72,11 @@ public class MovieFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         movieViewModel = ViewModelProviders.of(getActivity()).get(MovieViewModel.class);
+        final NavController navController = Navigation.findNavController(getView());
         movieViewModel.getListLiveDataPage().observe(getViewLifecycleOwner(), new Observer<PagedList<ModelFilm.Result>>() {
             @Override
             public void onChanged(PagedList<ModelFilm.Result> results) {
-                adapterRv = new AdapterPage();
+                adapterRv = new AdapterPage(navController);
                 adapterRv.submitList(results);
                 fragmentMovieBinding.rvFilm.setAdapter(adapterRv);
             }
