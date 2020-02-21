@@ -7,9 +7,10 @@ import androidx.databinding.BindingAdapter;
 
 import com.bumptech.glide.Glide;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ModelFilm {
+public class ModelFilm implements Serializable {
 
     private ArrayList<Result>results;
 
@@ -31,7 +32,7 @@ public class ModelFilm {
         Glide.with(imageView.getContext()).load("https://image.tmdb.org/t/p/w500"+imgUrl).into(imageView);
     }
 
-    public static class Result{
+    public static class Result implements Serializable{
         private String title;
         private String poster_path;
         private int id;

@@ -1,5 +1,6 @@
 package com.aditya.jetpack;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ public class AdapterPage extends PagedListAdapter<ModelFilm.Result,AdapterPage.H
     };
 
     public NavController navController;
+    public static String TAG_MODEL = "TAG_MODEL";
 
     protected AdapterPage(NavController navController) {
         super(diffCallback);
@@ -59,7 +61,10 @@ public class AdapterPage extends PagedListAdapter<ModelFilm.Result,AdapterPage.H
                 public void onClick(View view) {
 //                    Navigation.createNavigateOnClickListener(R.id.action_movieFragment_to_detailFragment);
 //                    Navigation.findNavController(view).navigate(R.id.action_movieFragment_to_detailFragment);
-                    navController.navigate(R.id.action_baseFragment2_to_detailFragment);
+                    Bundle bundle = new Bundle();
+//                    bundle.putInt(TAG_MODEL,getItem(getAdapterPosition()).getId());
+                    bundle.putSerializable(TAG_MODEL,getItem(getAdapterPosition()));
+                    navController.navigate(R.id.action_baseFragment2_to_detailFragment,bundle);
                 }
             });
         }

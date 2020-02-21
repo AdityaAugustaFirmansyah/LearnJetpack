@@ -41,14 +41,27 @@ public class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (savedInstanceState == null){
+            getActivity().getSupportFragmentManager().beginTransaction().replace(fragmentBaseBinding.containerFrame.getId(),new MovieFragment()).commit();
+            fragmentBaseBinding.bottomNavigation.setSelected(true);
+        }else {
+            Log.d(TAG, "onActivityCreated: saved instance"+savedInstanceState.isEmpty());
+        }
         fragmentBaseBinding.bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 if (menuItem.getItemId() == R.id.item_film){
-                    getChildFragmentManager().beginTransaction().replace(fragmentBaseBinding.containerFrame.getId(),new MovieFragment()).commit();
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(fragmentBaseBinding.containerFrame.getId(),new MovieFragment()).commit();
                     Log.d(TAG, "onNavigationItemSelected: ");
                 }else {
-                    getChildFragmentManager().beginTransaction().replace(fragmentBaseBinding.containerFrame.getId(),new TvFragment()).commit();
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(fragmentBaseBinding.containerFrame.getId(),new TvFragment()).commit();
                 }
                 return true;
             }
