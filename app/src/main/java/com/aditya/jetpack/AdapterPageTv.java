@@ -49,6 +49,14 @@ public class AdapterPageTv extends PagedListAdapter<ModelTv.Result,AdapterPageTv
         void bindDataTv(ModelTv.Result result){
             ItemTvBinding itemTvBinding = DataBindingUtil.bind(itemView);
             itemTvBinding.setData(result);
+            itemTvBinding.linearTv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+//                    BaseFragmentDirections.ActionBaseFragment2ToDetailFragment actionBaseFragment2ToDetailFragment =
+//                            BaseFragmentDirections.actionBaseFragment2ToDetailFragment(null,getItem(getAdapterPosition()));
+//                    Navigation.findNavController(view).navigate(actionBaseFragment2ToDetailFragment);
+                }
+            });
         }
     }
 }

@@ -29,10 +29,18 @@ public class DetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        ModelFilm.Result modelFilm = (ModelFilm.Result) getArguments().getSerializable("TAG_MODEL");
-//        Integer modelFilm = getArguments().getInt("TAG_MODEL",0);
         FragmentDetailBinding fragmentDetailBinding = DataBindingUtil.inflate(getLayoutInflater(),R.layout.fragment_detail,container,false);
-        fragmentDetailBinding.setData(modelFilm);
+        if (getArguments()!=null&& getArguments().getSerializable("TAG_MODEL") !=null){
+            ModelFilm.Result modelFilm = (ModelFilm.Result) getArguments().getSerializable("TAG_MODEL");
+//        Integer modelFilm = getArguments().getInt("TAG_MODEL",0);
+            fragmentDetailBinding.setData(modelFilm);
+            fragmentDetailBinding.setStatusDataFilm(true);
+        }else if (getArguments()!=null&& getArguments().getSerializable("TAG_MODEL_1") !=null){
+            ModelTv.Result result = (ModelTv.Result) getArguments().getSerializable("TAG_MODEL_1");
+            fragmentDetailBinding.setDataTv(result);
+            fragmentDetailBinding.setStatusDataFilm(false);
+        }
+
         return fragmentDetailBinding.getRoot();
     }
 

@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
     <data>
-
+        <import type="android.view.View"/>
         <variable
             name="data"
             type="com.aditya.jetpack.ModelFilm.Result" />
+        <variable
+            name="data_tv"
+            type="com.aditya.jetpack.ModelTv.Result" />
+
+        <variable
+            name="status_data_film"
+            type="Boolean" />
     </data>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,15 +23,36 @@
         tools:context=".DetailFragment">
 
         <!-- TODO: Update blank fragment layout -->
-        <ImageView
-            android:layout_width="200dp"
-            android:layout_height="250dp"
-            imgUrl="@{data.poster_path}"/>
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="@{data.title}"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="@{status_data_film ? View.VISIBLE : View.GONE}">
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="250dp"
+                imgUrl="@{data.poster_path}"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="@{data.title}"/>
+        </LinearLayout>
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="@{status_data_film ? View.GONE:View.VISIBLE }">
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="250dp"
+                imgUrl="@{data_tv.poster_path}"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="@{data_tv.name}"/>
+        </LinearLayout>
+    </RelativeLayout>
 </layout>

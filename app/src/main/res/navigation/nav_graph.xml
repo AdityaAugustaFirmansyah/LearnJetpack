@@ -20,6 +20,7 @@
         tools:layout="@layout/fragment_detail" >
         <argument
             android:name="TAG_MODEL"
-            app:argType="com.aditya.jetpack.ModelFilm$Result"/>
+            app:argType="com.aditya.jetpack.ModelFilm$Result"
+            app:nullable="true"/>
     </fragment>
 </navigation>
