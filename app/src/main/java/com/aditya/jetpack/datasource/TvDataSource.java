@@ -1,4 +1,4 @@
-package com.aditya.jetpack;
+package com.aditya.jetpack.datasource;
 
 import androidx.annotation.NonNull;
 import androidx.paging.PageKeyedDataSource;
@@ -7,7 +7,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TvDataSource extends PageKeyedDataSource<Long,ModelTv.Result> {
+public class TvDataSource extends PageKeyedDataSource<Long, ModelTv.Result> {
 
     private ApiInterface apiInterface;
     public TvDataSource() {

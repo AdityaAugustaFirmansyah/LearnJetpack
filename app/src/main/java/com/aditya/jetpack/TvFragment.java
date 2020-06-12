@@ -13,7 +13,10 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.aditya.jetpack.adapter.AdapterPageTv;
 import com.aditya.jetpack.databinding.FragmentMovieBinding;
+import com.aditya.jetpack.datasource.ModelTv;
+import com.aditya.jetpack.datasource.TvViewModel;
 
 public class TvFragment extends Fragment {
 
@@ -26,10 +29,6 @@ public class TvFragment extends Fragment {
         // Inflate the layout for this fragment
         fragmentMovieBinding = DataBindingUtil.inflate(getLayoutInflater(),R.layout.fragment_movie,container,false);
         View view = fragmentMovieBinding.getRoot();
-//        if (ViewModelFilm.movieRepository.getMutableLiveDataResultTv().getValue() == null){
-//            Log.d(TAG, "onCreateView: ");
-//            ViewModelFilm.onGetListTv();
-//        }
         fragmentMovieBinding.rvFilm.setLayoutManager(new LinearLayoutManager(view.getContext()));
         return view;
     }
@@ -37,21 +36,6 @@ public class TvFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//        ViewModelFilm viewModelFilm = ViewModelProviders.of(getActivity()).get(ViewModelFilm.class);
-//        viewModelFilm.mutableLiveDataResultsTv.observe(getViewLifecycleOwner(), new Observer<ArrayList<ModelTv.Result>>() {
-//            @Override
-//            public void onChanged(ArrayList<ModelTv.Result> results) {
-//                if (results!=null){
-//                    Log.d(TAG, "onChanged: ");
-//                    AdapterRv adapterRv = new AdapterRv();
-//                    adapterRv.setModelTvs(results);
-//                    fragmentMovieBinding.rvFilm.setAdapter(adapterRv);
-//                }else {
-//                    Log.d(TAG, "onChanged: null");
-//                }
-//            }
-//        });
-
         tvViewModel = ViewModelProviders.of(getActivity()).get(TvViewModel.class);
         tvViewModel.getListLiveData().observe(getViewLifecycleOwner(), new Observer<PagedList<ModelTv.Result>>() {
             @Override

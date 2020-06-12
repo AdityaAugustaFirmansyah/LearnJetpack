@@ -1,14 +1,16 @@
-package com.aditya.jetpack;
+package com.aditya.jetpack.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.aditya.jetpack.datasource.ModelFilm;
+import com.aditya.jetpack.datasource.ModelTv;
+import com.aditya.jetpack.R;
 import com.aditya.jetpack.databinding.ItemFilmBinding;
 import com.aditya.jetpack.databinding.ItemTvBinding;
 
@@ -30,7 +32,7 @@ public class AdapterRv extends RecyclerView.Adapter<AdapterRv.Holder> {
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (modelFilms != null){
-            ItemFilmBinding itemFilmBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),R.layout.item_film,parent,false);
+            ItemFilmBinding itemFilmBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_film,parent,false);
             return new Holder(itemFilmBinding.getRoot());
         }else {
             ItemTvBinding itemTvBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),R.layout.item_tv,parent,false);

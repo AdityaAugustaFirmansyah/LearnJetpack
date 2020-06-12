@@ -1,4 +1,4 @@
-package com.aditya.jetpack;
+package com.aditya.jetpack.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -6,10 +6,14 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.navigation.Navigation;
 import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.aditya.jetpack.BaseFragmentDirections;
+import com.aditya.jetpack.datasource.ModelTv;
+import com.aditya.jetpack.R;
 import com.aditya.jetpack.databinding.ItemTvBinding;
 
 public class AdapterPageTv extends PagedListAdapter<ModelTv.Result,AdapterPageTv.Holder> {
@@ -26,14 +30,14 @@ public class AdapterPageTv extends PagedListAdapter<ModelTv.Result,AdapterPageTv
         }
     };
 
-    protected AdapterPageTv() {
+    public AdapterPageTv() {
         super(diffCallback);
     }
 
     @NonNull
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemTvBinding itemTvBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),R.layout.item_tv,parent,false);
+        ItemTvBinding itemTvBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_tv,parent,false);
         return new Holder(itemTvBinding.getRoot());
     }
 
@@ -46,15 +50,15 @@ public class AdapterPageTv extends PagedListAdapter<ModelTv.Result,AdapterPageTv
         public Holder(@NonNull View itemView) {
             super(itemView);
         }
-        void bindDataTv(ModelTv.Result result){
+        void bindDataTv(final ModelTv.Result result){
             ItemTvBinding itemTvBinding = DataBindingUtil.bind(itemView);
             itemTvBinding.setData(result);
             itemTvBinding.linearTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    BaseFragmentDirections.ActionBaseFragment2ToDetailFragment actionBaseFragment2ToDetailFragment =
-//                            BaseFragmentDirections.actionBaseFragment2ToDetailFragment(null,getItem(getAdapterPosition()));
-//                    Navigation.findNavController(view).navigate(actionBaseFragment2ToDetailFragment);
+                    BaseFragmentDirections.ActionBaseFragment2ToDetailTvFragment actionBaseFragment2ToDetailTvFragment =
+                            BaseFragmentDirections.actionBaseFragment2ToDetailTvFragment(result);
+                    Navigation.findNavController(view).navigate(actionBaseFragment2ToDetailTvFragment);
                 }
             });
         }

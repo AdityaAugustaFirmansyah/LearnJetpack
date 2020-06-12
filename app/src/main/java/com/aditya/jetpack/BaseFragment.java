@@ -2,7 +2,6 @@ package com.aditya.jetpack;
 
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +24,11 @@ public class BaseFragment extends Fragment {
 
     private String TAG = "BaseFragment";
     FragmentBaseBinding fragmentBaseBinding;
-
+    private static final String TAG_FRAGMENT_FILM = "TAG_FRAGMENT_FILM";
+    private MovieFragment movieFragment = new MovieFragment();
+    private TvFragment tvFragment = new TvFragment();
+    private static final String TAG_FRAGMENT_TV = "TAG_FRAGMENT_TV";
+    private String activeFragment ;
     public BaseFragment() {
         // Required empty public constructor
     }
@@ -41,30 +44,47 @@ public class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        if (savedInstanceState == null){
-            getActivity().getSupportFragmentManager().beginTransaction().replace(fragmentBaseBinding.containerFrame.getId(),new MovieFragment()).commit();
-            fragmentBaseBinding.bottomNavigation.setSelected(true);
+        if (savedInstanceState!=null){
+            if (savedInstanceState.getString("TAG_FRAGMENT").equals(TAG_FRAGMENT_FILM)){
+                movieFragment = (MovieFragment) getChildFragmentManager().findFragmentByTag(TAG_FRAGMENT_FILM);
+                activeFragment = TAG_FRAGMENT_FILM;
+            }else {
+                tvFragment = (TvFragment) getChildFragmentManager().findFragmentByTag(TAG_FRAGMENT_TV);
+                activeFragment = TAG_FRAGMENT_TV;
+            }
         }else {
-            Log.d(TAG, "onActivityCreated: saved instance"+savedInstanceState.isEmpty());
+            if (movieFragment!=null&&!movieFragment.isInLayout()){
+                getChildFragmentManager().beginTransaction().replace(fragmentBaseBinding.containerFrame.getId(),movieFragment,TAG_FRAGMENT_FILM).commit();
+                activeFragment = TAG_FRAGMENT_FILM;
+            }else if(tvFragment!=null&&!tvFragment.isInLayout()){
+                getChildFragmentManager().beginTransaction().replace(fragmentBaseBinding.containerFrame.getId(),tvFragment,TAG_FRAGMENT_TV).commit();
+                activeFragment = TAG_FRAGMENT_TV;
+            }
         }
+
         fragmentBaseBinding.bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 if (menuItem.getItemId() == R.id.item_film){
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(fragmentBaseBinding.containerFrame.getId(),new MovieFragment()).commit();
-                    Log.d(TAG, "onNavigationItemSelected: ");
+                    getChildFragmentManager().beginTransaction().replace(fragmentBaseBinding.containerFrame.getId(),movieFragment,TAG_FRAGMENT_FILM).commit();
+                    activeFragment = TAG_FRAGMENT_FILM;
                 }else {
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(fragmentBaseBinding.containerFrame.getId(),new TvFragment()).commit();
+                    getChildFragmentManager().beginTransaction().replace(fragmentBaseBinding.containerFrame.getId(),tvFragment,TAG_FRAGMENT_TV).commit();
+                    activeFragment = TAG_FRAGMENT_TV;
                 }
                 return true;
             }
         });
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putString("TAG_FRAGMENT",activeFragment);
+        super.onSaveInstanceState(outState);
     }
 }

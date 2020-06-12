@@ -8,19 +8,19 @@
         android:orientation="vertical"
         android:gravity="center"
         tools:context=".MainActivity">
-
-        <com.github.jlmd.animatedcircleloadingview.AnimatedCircleLoadingView
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:layout_centerInParent="true"
-            app:animCircleLoadingView_mainColor= "@android:color/holo_red_dark"
-            android:id="@+id/loading"
-            app:animCircleLoadingView_secondaryColor= "@android:color/holo_orange_dark"
-            app:animCircleLoadingView_textColor= "@android:color/black" />
-
-        <androidx.recyclerview.widget.RecyclerView
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/rv_film" />
+            android:id="@+id/swipe_refresh_movie">
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/rv_film" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <include
+            layout="@layout/layout_erro_movie"
+            android:id="@+id/layout_error"
+            android:visibility="gone"/>
     </RelativeLayout>
 </layout>

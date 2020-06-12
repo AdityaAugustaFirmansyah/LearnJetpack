@@ -1,4 +1,4 @@
-package com.aditya.jetpack;
+package com.aditya.jetpack.datasource;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;

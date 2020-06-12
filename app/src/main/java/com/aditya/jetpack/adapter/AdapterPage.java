@@ -1,4 +1,4 @@
-package com.aditya.jetpack;
+package com.aditya.jetpack.adapter;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +12,8 @@ import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.aditya.jetpack.datasource.ModelFilm;
+import com.aditya.jetpack.R;
 import com.aditya.jetpack.databinding.ItemFilmBinding;
 
 public class AdapterPage extends PagedListAdapter<ModelFilm.Result,AdapterPage.Holder> {
@@ -30,7 +32,7 @@ public class AdapterPage extends PagedListAdapter<ModelFilm.Result,AdapterPage.H
     public NavController navController;
     public static String TAG_MODEL = "TAG_MODEL";
 
-    protected AdapterPage(NavController navController) {
+    public AdapterPage(NavController navController) {
         super(diffCallback);
         this.navController = navController;
     }
@@ -38,7 +40,7 @@ public class AdapterPage extends PagedListAdapter<ModelFilm.Result,AdapterPage.H
     @NonNull
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemFilmBinding itemFilmBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),R.layout.item_film,parent,false);
+        ItemFilmBinding itemFilmBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.item_film,parent,false);
         return new Holder(itemFilmBinding.getRoot());
     }
 

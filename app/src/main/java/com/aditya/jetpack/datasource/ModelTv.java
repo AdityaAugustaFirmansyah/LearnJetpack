@@ -1,4 +1,4 @@
-package com.aditya.jetpack;
+package com.aditya.jetpack.datasource;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ public class ModelTv implements Serializable {
         this.results = results;
     }
 
-    public class Result{
+    public class Result implements Serializable{
         private String original_name;
         private String name;
         private String poster_path;

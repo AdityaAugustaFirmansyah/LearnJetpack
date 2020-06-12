@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_baseFragment2_to_detailFragment"
             app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_baseFragment2_to_detailTvFragment"
+            app:destination="@id/detailTvFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
@@ -20,7 +23,17 @@
         tools:layout="@layout/fragment_detail" >
         <argument
             android:name="TAG_MODEL"
-            app:argType="com.aditya.jetpack.ModelFilm$Result"
+            app:argType="com.aditya.jetpack.datasource.ModelFilm$Result"
+            app:nullable="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/detailTvFragment"
+        android:name="com.aditya.jetpack.DetailTvFragment"
+        android:label="fragment_detail_tv"
+        tools:layout="@layout/fragment_detail_tv" >
+        <argument
+            android:name="TAG_MODEL_1"
+            app:argType="com.aditya.jetpack.datasource.ModelTv$Result"
             app:nullable="true"/>
     </fragment>
 </navigation>

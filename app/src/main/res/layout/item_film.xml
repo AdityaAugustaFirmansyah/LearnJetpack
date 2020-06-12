@@ -4,7 +4,7 @@
     <data>
         <variable
             name="dataFilm"
-            type="com.aditya.jetpack.ModelFilm.Result" />
+            type="com.aditya.jetpack.datasource.ModelFilm.Result" />
     </data>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"

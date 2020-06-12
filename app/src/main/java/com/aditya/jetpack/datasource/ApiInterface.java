@@ -1,4 +1,4 @@
-package com.aditya.jetpack;
+package com.aditya.jetpack.datasource;
 
 import java.util.Map;
 

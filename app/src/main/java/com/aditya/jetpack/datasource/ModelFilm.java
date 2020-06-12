@@ -1,4 +1,4 @@
-package com.aditya.jetpack;
+package com.aditya.jetpack.datasource;
 
 import android.widget.ImageView;
 import android.widget.TextView;
