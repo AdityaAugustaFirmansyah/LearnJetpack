@@ -3,6 +3,7 @@ package com.aditya.jetpack;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,23 +71,23 @@ public class MovieFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         movieViewModel = ViewModelProviders.of(getActivity()).get(MovieViewModel.class);
         final NavController navController = Navigation.findNavController(getView());
-        movieViewModel.getListLiveDataPage().observe(getViewLifecycleOwner(), new Observer<PagedList<ModelFilm.Result>>() {
-            @Override
-            public void onChanged(PagedList<ModelFilm.Result> results) {
-                adapterRv = new AdapterPage(navController);
-                adapterRv.submitList(results);
-                fragmentMovieBinding.rvFilm.setAdapter(adapterRv);
-            }
-        });
+//        movieViewModel.getListLiveDataPage().observe(getViewLifecycleOwner(), new Observer<PagedList<ModelFilm.Result>>() {
+//            @Override
+//            public void onChanged(PagedList<ModelFilm.Result> results) {
+//                adapterRv = new AdapterPage(navController);
+//                adapterRv.submitList(results);
+//                fragmentMovieBinding.rvFilm.setAdapter(adapterRv);
+//            }
+//        });
         fragmentMovieBinding.swipeRefreshMovie.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                movieViewModel.getListLiveDataPage();
+//                movieViewModel.getListLiveDataPage();
                 fragmentMovieBinding.swipeRefreshMovie.setRefreshing(false);
             }
         });
 
-        movieViewModel.getMovieViewModelMutableLiveData().observe(getViewLifecycleOwner(), new Observer<ModelMovieView>() {
+        movieViewModel.getMovieViewModelLiveData().observe(getViewLifecycleOwner(), new Observer<ModelMovieView>() {
             @Override
             public void onChanged(ModelMovieView modelMovieView) {
                 View view = fragmentMovieBinding.layoutError.getRootView();
@@ -94,9 +95,20 @@ public class MovieFragment extends Fragment {
                 if (modelMovieView.getMsgError()!=null){
                     fragmentMovieBinding.layoutError.setVisibility(View.VISIBLE);
                     ((TextView) view.findViewById(R.id.tv_error)).setText(modelMovieView.getMsgError());
+                    Log.d("TAG_MOVIE_FRAGMENT", "getMsgError: "+modelMovieView.getMsgError());
+//                    fragmentMovieBinding.swipeRefreshMovie.setRefreshing(modelMovieView.isStatusLoading());
                 }else {
                     fragmentMovieBinding.layoutError.setVisibility(View.GONE);
                 }
+
+                if (modelMovieView.getModelFilms() != null){
+                    adapterRv = new AdapterPage(navController);
+                    adapterRv.submitList(modelMovieView.getModelFilms());
+                    fragmentMovieBinding.rvFilm.setAdapter(adapterRv);
+//                    fragmentMovieBinding.swipeRefreshMovie.setRefreshing(modelMovieView.isStatusLoading());
+//                    movieViewModel.hideLoading();
+                }
+                Log.d("TAG_MOVIE_FRAGMENT", "onChanged: "+modelMovieView.isStatusLoading());
             }
         });
     }

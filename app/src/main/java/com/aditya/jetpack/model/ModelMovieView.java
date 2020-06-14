@@ -1,14 +1,21 @@
 package com.aditya.jetpack.model;
 
+import androidx.annotation.NonNull;
+import androidx.paging.PagedList;
+
 import com.aditya.jetpack.datasource.ModelFilm;
 
-import java.util.ArrayList;
-
-public class ModelMovieView {
+public class ModelMovieView implements Cloneable{
     boolean statusLoading;
     int statusCode;
     String msgError;
-    ArrayList<ModelFilm.Result> modelFilms;
+    PagedList<ModelFilm.Result> modelFilms;
+
+    public ModelMovieView(boolean statusLoading, String msgError, PagedList<ModelFilm.Result> modelFilms) {
+        this.statusLoading = statusLoading;
+        this.msgError = msgError;
+        this.modelFilms = modelFilms;
+    }
 
     public boolean isStatusLoading() {
         return statusLoading;
@@ -34,11 +41,17 @@ public class ModelMovieView {
         this.msgError = msgError;
     }
 
-    public ArrayList<ModelFilm.Result> getModelFilms() {
+    public PagedList<ModelFilm.Result> getModelFilms() {
         return modelFilms;
     }
 
-    public void setModelFilms(ArrayList<ModelFilm.Result> modelFilms) {
+    public void setModelFilms(PagedList<ModelFilm.Result> modelFilms) {
         this.modelFilms = modelFilms;
+    }
+
+    @NonNull
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

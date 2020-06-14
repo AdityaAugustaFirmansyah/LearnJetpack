@@ -3,6 +3,7 @@ package com.aditya.jetpack.datasource;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.BindingAdapter;
 
 import com.bumptech.glide.Glide;
@@ -32,7 +33,7 @@ public class ModelFilm implements Serializable {
         Glide.with(imageView.getContext()).load("https://image.tmdb.org/t/p/w500"+imgUrl).into(imageView);
     }
 
-    public static class Result implements Serializable{
+    public static class Result implements Serializable,Cloneable{
         private String title;
         private String poster_path;
         private int id;
@@ -59,6 +60,12 @@ public class ModelFilm implements Serializable {
 
         public void setPoster_path(String poster_path) {
             this.poster_path = poster_path;
+        }
+
+        @NonNull
+        @Override
+        protected Object clone() throws CloneNotSupportedException {
+            return super.clone();
         }
     }
 }
