@@ -16,6 +16,8 @@ import com.aditya.jetpack.datasource.ModelTv;
 import com.aditya.jetpack.R;
 import com.aditya.jetpack.databinding.ItemTvBinding;
 
+import java.util.Objects;
+
 public class AdapterPageTv extends PagedListAdapter<ModelTv.Result,AdapterPageTv.Holder> {
 
     private static final DiffUtil.ItemCallback<ModelTv.Result> diffCallback = new DiffUtil.ItemCallback<ModelTv.Result>() {
@@ -46,13 +48,13 @@ public class AdapterPageTv extends PagedListAdapter<ModelTv.Result,AdapterPageTv
         holder.bindDataTv(getItem(position));
     }
 
-    public class Holder extends RecyclerView.ViewHolder {
+    public static class Holder extends RecyclerView.ViewHolder {
         public Holder(@NonNull View itemView) {
             super(itemView);
         }
         void bindDataTv(final ModelTv.Result result){
             ItemTvBinding itemTvBinding = DataBindingUtil.bind(itemView);
-            itemTvBinding.setData(result);
+            Objects.requireNonNull(itemTvBinding).setData(result);
             itemTvBinding.linearTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -3,7 +3,6 @@ package com.aditya.jetpack.datasource;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.databinding.BindingAdapter;
 
 import com.bumptech.glide.Glide;
@@ -13,14 +12,10 @@ import java.util.ArrayList;
 
 public class ModelFilm implements Serializable {
 
-    private ArrayList<Result>results;
+    ArrayList<Result>results;
 
     public ArrayList<Result> getResults() {
         return results;
-    }
-
-    public void setResults(ArrayList<Result> results) {
-        this.results = results;
     }
 
     @BindingAdapter({"text"})
@@ -60,12 +55,6 @@ public class ModelFilm implements Serializable {
 
         public void setPoster_path(String poster_path) {
             this.poster_path = poster_path;
-        }
-
-        @NonNull
-        @Override
-        protected Object clone() throws CloneNotSupportedException {
-            return super.clone();
         }
     }
 }

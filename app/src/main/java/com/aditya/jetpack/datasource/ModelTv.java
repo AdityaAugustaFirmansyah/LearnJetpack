@@ -3,45 +3,14 @@ package com.aditya.jetpack.datasource;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ModelTv implements Serializable {
-    private int page;
-    private int total_results;
-    private int total_pages;
-    private ArrayList<Result>results;
-
-    public int getPage() {
-        return page;
-    }
-
-    public void setPage(int page) {
-        this.page = page;
-    }
-
-    public int getTotal_results() {
-        return total_results;
-    }
-
-    public void setTotal_results(int total_results) {
-        this.total_results = total_results;
-    }
-
-    public int getTotal_pages() {
-        return total_pages;
-    }
-
-    public void setTotal_pages(int total_pages) {
-        this.total_pages = total_pages;
-    }
+public class ModelTv implements Serializable, Cloneable {
+    ArrayList<Result> results;
 
     public ArrayList<Result> getResults() {
         return results;
     }
 
-    public void setResults(ArrayList<Result> results) {
-        this.results = results;
-    }
-
-    public class Result implements Serializable{
+    public static class Result implements Serializable, Cloneable {
         private String original_name;
         private String name;
         private String poster_path;

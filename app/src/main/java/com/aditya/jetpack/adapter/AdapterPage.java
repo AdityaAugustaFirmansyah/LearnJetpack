@@ -16,6 +16,8 @@ import com.aditya.jetpack.datasource.ModelFilm;
 import com.aditya.jetpack.R;
 import com.aditya.jetpack.databinding.ItemFilmBinding;
 
+import java.util.Objects;
+
 public class AdapterPage extends PagedListAdapter<ModelFilm.Result,AdapterPage.Holder> {
     private static final DiffUtil.ItemCallback<ModelFilm.Result> diffCallback = new DiffUtil.ItemCallback<ModelFilm.Result>() {
         @Override
@@ -29,8 +31,8 @@ public class AdapterPage extends PagedListAdapter<ModelFilm.Result,AdapterPage.H
         }
     };
 
-    public NavController navController;
-    public static String TAG_MODEL = "TAG_MODEL";
+    public  NavController navController;
+    public static final String TAG_MODEL = "TAG_MODEL";
 
     public AdapterPage(NavController navController) {
         super(diffCallback);
@@ -58,7 +60,7 @@ public class AdapterPage extends PagedListAdapter<ModelFilm.Result,AdapterPage.H
             if (itemFilmBinding != null) {
                 itemFilmBinding.setDataFilm(modelFilm);
             }
-            itemFilmBinding.linearFilm.setOnClickListener(new View.OnClickListener() {
+            Objects.requireNonNull(itemFilmBinding).linearFilm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 //                    Navigation.createNavigateOnClickListener(R.id.action_movieFragment_to_detailFragment);

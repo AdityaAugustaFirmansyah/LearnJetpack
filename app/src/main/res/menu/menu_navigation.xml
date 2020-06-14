@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:title="Film"
+        android:title="@string/film"
         android:id="@+id/item_film"/>
     <item
-        android:title="Tv"
+        android:title="@string/tv"
         android:id="@+id/item_tv"/>
 </menu>

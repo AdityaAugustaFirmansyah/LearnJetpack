@@ -1,7 +1,6 @@
 package com.aditya.jetpack;
 
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,17 +16,16 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.aditya.jetpack.adapter.AdapterPage;
 import com.aditya.jetpack.databinding.FragmentMovieBinding;
-import com.aditya.jetpack.datasource.ModelFilm;
 import com.aditya.jetpack.datasource.MovieViewModel;
-import com.aditya.jetpack.datasource.ViewModelFilm;
 import com.aditya.jetpack.model.ModelMovieView;
+
+import java.util.Objects;
 
 
 /**
@@ -36,31 +34,16 @@ import com.aditya.jetpack.model.ModelMovieView;
 public class MovieFragment extends Fragment {
 
     AdapterPage adapterRv;
-    String statusLoading = "";
     private FragmentMovieBinding fragmentMovieBinding;
-    static ViewModelFilm viewModelFilm;
-
-    private PagedList<ModelFilm.Result> modelFilms;
-    int scroolPosition;
     RecyclerView recyclerViewById;
     MovieViewModel movieViewModel;
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    public MovieFragment() {
-        // Required empty public constructor
-    }
-
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+    public View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         fragmentMovieBinding = DataBindingUtil.inflate(getLayoutInflater(),R.layout.fragment_movie,container,false);
 
         View view = fragmentMovieBinding.getRoot();
-        ModelFilm.Result result = new ModelFilm.Result();
         recyclerViewById = view.findViewById(R.id.rv_film);
         fragmentMovieBinding.rvFilm.setLayoutManager(new LinearLayoutManager(getContext()));
         return view;
@@ -69,34 +52,25 @@ public class MovieFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        movieViewModel = ViewModelProviders.of(getActivity()).get(MovieViewModel.class);
-        final NavController navController = Navigation.findNavController(getView());
-//        movieViewModel.getListLiveDataPage().observe(getViewLifecycleOwner(), new Observer<PagedList<ModelFilm.Result>>() {
-//            @Override
-//            public void onChanged(PagedList<ModelFilm.Result> results) {
-//                adapterRv = new AdapterPage(navController);
-//                adapterRv.submitList(results);
-//                fragmentMovieBinding.rvFilm.setAdapter(adapterRv);
-//            }
-//        });
+        movieViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
+        final NavController navController = Navigation.findNavController(Objects.requireNonNull(getView()));
+
         fragmentMovieBinding.swipeRefreshMovie.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-//                movieViewModel.getListLiveDataPage();
-                fragmentMovieBinding.swipeRefreshMovie.setRefreshing(false);
+                movieViewModel.getMovies();
             }
         });
 
         movieViewModel.getMovieViewModelLiveData().observe(getViewLifecycleOwner(), new Observer<ModelMovieView>() {
             @Override
-            public void onChanged(ModelMovieView modelMovieView) {
+            public void onChanged(final ModelMovieView modelMovieView) {
                 View view = fragmentMovieBinding.layoutError.getRootView();
                 fragmentMovieBinding.swipeRefreshMovie.setRefreshing(modelMovieView.isStatusLoading());
                 if (modelMovieView.getMsgError()!=null){
                     fragmentMovieBinding.layoutError.setVisibility(View.VISIBLE);
                     ((TextView) view.findViewById(R.id.tv_error)).setText(modelMovieView.getMsgError());
                     Log.d("TAG_MOVIE_FRAGMENT", "getMsgError: "+modelMovieView.getMsgError());
-//                    fragmentMovieBinding.swipeRefreshMovie.setRefreshing(modelMovieView.isStatusLoading());
                 }else {
                     fragmentMovieBinding.layoutError.setVisibility(View.GONE);
                 }
@@ -105,8 +79,6 @@ public class MovieFragment extends Fragment {
                     adapterRv = new AdapterPage(navController);
                     adapterRv.submitList(modelMovieView.getModelFilms());
                     fragmentMovieBinding.rvFilm.setAdapter(adapterRv);
-//                    fragmentMovieBinding.swipeRefreshMovie.setRefreshing(modelMovieView.isStatusLoading());
-//                    movieViewModel.hideLoading();
                 }
                 Log.d("TAG_MOVIE_FRAGMENT", "onChanged: "+modelMovieView.isStatusLoading());
             }

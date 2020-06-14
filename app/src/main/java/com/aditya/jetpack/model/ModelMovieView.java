@@ -7,7 +7,6 @@ import com.aditya.jetpack.datasource.ModelFilm;
 
 public class ModelMovieView implements Cloneable{
     boolean statusLoading;
-    int statusCode;
     String msgError;
     PagedList<ModelFilm.Result> modelFilms;
 
@@ -23,14 +22,6 @@ public class ModelMovieView implements Cloneable{
 
     public void setStatusLoading(boolean statusLoading) {
         this.statusLoading = statusLoading;
-    }
-
-    public int getStatusCode() {
-        return statusCode;
-    }
-
-    public void setStatusCode(int statusCode) {
-        this.statusCode = statusCode;
     }
 
     public String getMsgError() {

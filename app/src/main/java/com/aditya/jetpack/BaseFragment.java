@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment;
 import com.aditya.jetpack.databinding.FragmentBaseBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.Objects;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,7 +24,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class BaseFragment extends Fragment {
 
 
-    private String TAG = "BaseFragment";
     FragmentBaseBinding fragmentBaseBinding;
     private static final String TAG_FRAGMENT_FILM = "TAG_FRAGMENT_FILM";
     private MovieFragment movieFragment = new MovieFragment();
@@ -34,7 +35,7 @@ public class BaseFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         fragmentBaseBinding = DataBindingUtil.inflate(getLayoutInflater(),R.layout.fragment_base,container,false);
@@ -50,7 +51,7 @@ public class BaseFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (savedInstanceState!=null){
-            if (savedInstanceState.getString("TAG_FRAGMENT").equals(TAG_FRAGMENT_FILM)){
+            if (Objects.equals(savedInstanceState.getString("TAG_FRAGMENT"), TAG_FRAGMENT_FILM)){
                 movieFragment = (MovieFragment) getChildFragmentManager().findFragmentByTag(TAG_FRAGMENT_FILM);
                 activeFragment = TAG_FRAGMENT_FILM;
             }else {

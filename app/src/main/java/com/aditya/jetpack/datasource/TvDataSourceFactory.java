@@ -1,20 +1,14 @@
 package com.aditya.jetpack.datasource;
 
-import android.app.Application;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.DataSource;
 import androidx.paging.PageKeyedDataSource;
 
+@SuppressWarnings("rawtypes")
 public class TvDataSourceFactory extends PageKeyedDataSource.Factory {
 
     private MutableLiveData<TvDataSource>movieDataSourceMutableLiveData = new MutableLiveData<>();
-    private Application application;
-
-    public TvDataSourceFactory(Application application) {
-        this.application = application;
-    }
 
     @NonNull
     @Override
@@ -24,7 +18,4 @@ public class TvDataSourceFactory extends PageKeyedDataSource.Factory {
         return tvDataSource;
     }
 
-    public MutableLiveData<TvDataSource> getMovieDataSourceMutableLiveData() {
-        return movieDataSourceMutableLiveData;
-    }
 }

@@ -2,6 +2,7 @@ package com.aditya.jetpack.datasource;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
@@ -30,9 +31,10 @@ public class MovieRepository {
         statusLoading.postValue(true);
         apiInterface.getModelFilms(map).enqueue(new Callback<ModelFilm>() {
             @Override
-            public void onResponse(Call<ModelFilm> call, Response<ModelFilm> response) {
+            public void onResponse(@NonNull Call<ModelFilm> call, @NonNull Response<ModelFilm> response) {
                 statusLoading.postValue(false);
                 if (response.isSuccessful()){
+                    assert response.body() != null;
                     mutableLiveDataResult.setValue(response.body().getResults());
                 }else{
                    message.postValue("gagal");
@@ -41,7 +43,7 @@ public class MovieRepository {
             }
 
             @Override
-            public void onFailure(Call<ModelFilm> call, Throwable t) {
+            public void onFailure(@NonNull Call<ModelFilm> call, @NonNull Throwable t) {
                 statusLoading.postValue(false);
                 mutableLiveDataResult.setValue(null);
                 message.postValue(t.getMessage());
@@ -54,8 +56,9 @@ public class MovieRepository {
         map.put("api_key","6f7e6b4fd171ee5a84c759606b18dfa4");
         apiInterface.getModelTvs(map).enqueue(new Callback<ModelTv>() {
             @Override
-            public void onResponse(Call<ModelTv> call, Response<ModelTv> response) {
+            public void onResponse(@NonNull Call<ModelTv> call, @NonNull Response<ModelTv> response) {
                 if (response.isSuccessful()){
+                    assert response.body() != null;
                     mutableLiveDataResultTv.setValue(response.body().getResults());
                 }else {
                     message.setValue(response.message());
@@ -65,7 +68,7 @@ public class MovieRepository {
             }
 
             @Override
-            public void onFailure(Call<ModelTv> call, Throwable t) {
+            public void onFailure(@NonNull Call<ModelTv> call, @NonNull Throwable t) {
                 message.setValue(t.getMessage());
                 mutableLiveDataResultTv.setValue(null);
                 Log.d(TAG, "onFailure: "+t.getMessage());

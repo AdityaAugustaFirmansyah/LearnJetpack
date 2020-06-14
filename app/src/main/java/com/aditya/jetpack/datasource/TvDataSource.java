@@ -3,6 +3,8 @@ package com.aditya.jetpack.datasource;
 import androidx.annotation.NonNull;
 import androidx.paging.PageKeyedDataSource;
 
+import java.util.Objects;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -18,12 +20,13 @@ public class TvDataSource extends PageKeyedDataSource<Long, ModelTv.Result> {
     public void loadInitial(@NonNull final LoadInitialParams<Long> params, @NonNull final LoadInitialCallback<Long, ModelTv.Result> callback) {
         apiInterface.getModelTv(ApiClient.API_KEY,1).enqueue(new Callback<ModelTv>() {
             @Override
-            public void onResponse(Call<ModelTv> call, Response<ModelTv> response) {
+            public void onResponse(@NonNull Call<ModelTv> call, @NonNull Response<ModelTv> response) {
+                assert response.body() != null;
                 callback.onResult(response.body().getResults(),null,(long)2);
             }
 
             @Override
-            public void onFailure(Call<ModelTv> call, Throwable t) {
+            public void onFailure(@NonNull Call<ModelTv> call, @NonNull Throwable t) {
 
             }
         });
@@ -38,12 +41,12 @@ public class TvDataSource extends PageKeyedDataSource<Long, ModelTv.Result> {
     public void loadAfter(@NonNull final LoadParams<Long> params, @NonNull final LoadCallback<Long, ModelTv.Result> callback) {
         apiInterface.getModelTv(ApiClient.API_KEY,params.key).enqueue(new Callback<ModelTv>() {
             @Override
-            public void onResponse(Call<ModelTv> call, Response<ModelTv> response) {
-                callback.onResult(response.body().getResults(),params.key+1);
+            public void onResponse(@NonNull Call<ModelTv> call, @NonNull Response<ModelTv> response) {
+                callback.onResult(Objects.requireNonNull(response.body()).getResults(),params.key+1);
             }
 
             @Override
-            public void onFailure(Call<ModelTv> call, Throwable t) {
+            public void onFailure(@NonNull Call<ModelTv> call, @NonNull Throwable t) {
 
             }
         });
