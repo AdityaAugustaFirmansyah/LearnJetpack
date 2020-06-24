@@ -1,35 +1,37 @@
 package com.aditya.jetpack.datasource;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 import androidx.paging.PageKeyedDataSource;
 
-import java.util.Objects;
+import com.aditya.jetpack.model.ModelTvView;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.disposables.CompositeDisposable;
 
 public class TvDataSource extends PageKeyedDataSource<Long, ModelTv.Result> {
 
     private ApiInterface apiInterface;
-    public TvDataSource() {
-        this.apiInterface = ApiClient.apiInterface;
+    private CompositeDisposable compositeDisposable;
+    private MutableLiveData<ModelTvView> loadInitial = new MutableLiveData<>();
+    private MutableLiveData<ModelTvView> networkState = new MutableLiveData<>();
+
+    public TvDataSource(ApiInterface apiInterface, CompositeDisposable compositeDisposable) {
+        this.apiInterface = apiInterface;
+        this.compositeDisposable = compositeDisposable;
     }
 
     @Override
     public void loadInitial(@NonNull final LoadInitialParams<Long> params, @NonNull final LoadInitialCallback<Long, ModelTv.Result> callback) {
-        apiInterface.getModelTv(ApiClient.API_KEY,1).enqueue(new Callback<ModelTv>() {
-            @Override
-            public void onResponse(@NonNull Call<ModelTv> call, @NonNull Response<ModelTv> response) {
-                assert response.body() != null;
-                callback.onResult(response.body().getResults(),null,(long)2);
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ModelTv> call, @NonNull Throwable t) {
-
-            }
-        });
+        networkState.postValue(new ModelTvView(true,null));
+        loadInitial.postValue(new ModelTvView(true,null));
+        compositeDisposable.add(apiInterface.getModelTv(ApiClient.API_KEY,(long)1).subscribe(modelTv -> {
+            loadInitial.postValue(new ModelTvView(false,null));
+            networkState.postValue(new ModelTvView(false,null));
+            callback.onResult(modelTv.getResults(),null,(long)2);
+        },throwable -> {
+            loadInitial.postValue(new ModelTvView(false,throwable.getLocalizedMessage()));
+            networkState.postValue(new ModelTvView(false,throwable.getLocalizedMessage()));
+        }));
     }
 
     @Override
@@ -39,16 +41,18 @@ public class TvDataSource extends PageKeyedDataSource<Long, ModelTv.Result> {
 
     @Override
     public void loadAfter(@NonNull final LoadParams<Long> params, @NonNull final LoadCallback<Long, ModelTv.Result> callback) {
-        apiInterface.getModelTv(ApiClient.API_KEY,params.key).enqueue(new Callback<ModelTv>() {
-            @Override
-            public void onResponse(@NonNull Call<ModelTv> call, @NonNull Response<ModelTv> response) {
-                callback.onResult(Objects.requireNonNull(response.body()).getResults(),params.key+1);
-            }
+        networkState.postValue(new ModelTvView(true,null));
+        compositeDisposable.add(apiInterface.getModelTv(ApiClient.API_KEY,params.key).subscribe(modelTv -> {
+            networkState.postValue(new ModelTvView(false,null));
+            callback.onResult(modelTv.getResults(),(long)params.key+1);
+        },throwable -> networkState.postValue(new ModelTvView(true,throwable.getLocalizedMessage()))));
+    }
 
-            @Override
-            public void onFailure(@NonNull Call<ModelTv> call, @NonNull Throwable t) {
+    public MutableLiveData<ModelTvView> getLoadInitial() {
+        return loadInitial;
+    }
 
-            }
-        });
+    public MutableLiveData<ModelTvView> getNetworkState() {
+        return networkState;
     }
 }

@@ -1,28 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
             name="dataFilm"
             type="com.aditya.jetpack.datasource.ModelFilm.Result" />
     </data>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:padding="16dp"
-    android:id="@+id/linear_film"
-    android:layout_height="wrap_content"
-    tools:ignore="UseCompoundDrawables">
 
-    <ImageView
-        android:layout_width="200dp"
-        android:contentDescription="@string/image"
-        android:layout_height="250dp"
-        imgUrl="@{dataFilm.poster_path}" />
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linear_film"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        text="@{dataFilm.title}"/>
+        android:orientation="horizontal"
+        android:padding="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_title_film"
+        app:layout_constraintTop_toTopOf="@+id/tv_title_film">
 
-</LinearLayout>
+        <ImageView
+            android:id="@+id/img_poster_film"
+            imgUrl="@{dataFilm.poster_path}"
+            android:layout_width="200dp"
+            android:layout_height="250dp"
+            android:contentDescription="@string/image"
+            android:src="@color/colorPrimary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_conversion_absoluteHeight="250dp"
+            tools:layout_conversion_absoluteWidth="200dp" />
+
+        <TextView
+            android:id="@+id/tv_title_film"
+            text="@{dataFilm.title}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/img_poster_film"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_conversion_absoluteHeight="19dp"
+            tools:layout_conversion_absoluteWidth="179dp" />
+
+        <TextView
+            android:id="@+id/tv_genre_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="49dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textAlignment="center"
+            app:layout_constraintStart_toEndOf="@+id/img_poster_film"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title_film" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

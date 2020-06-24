@@ -1,38 +1,46 @@
 package com.aditya.jetpack.datasource;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 import androidx.paging.PageKeyedDataSource;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.aditya.jetpack.model.ModelMovieView;
+
+import io.reactivex.Completable;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Action;
 
 @SuppressWarnings("unchecked")
 public class MovieDataSource extends PageKeyedDataSource<Long, ModelFilm.Result> {
     private ApiInterface apiInterface;
-    private String apiKey = "6f7e6b4fd171ee5a84c759606b18dfa4";
+    private String apiKey = "cdae801c86f7bf152ee22e13c6c9577a";
+    private CompositeDisposable compositeDisposable;
+    private MutableLiveData<ModelMovieView>modelMovieViewMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<ModelMovieView>modelMovieViewMutableLiveDataNextPage = new MutableLiveData<>();
+    private Completable completableRetry;
 
-    public MovieDataSource(ApiInterface apiInterface) {
+    public MutableLiveData<ModelMovieView> getModelMovieViewMutableLiveData() {
+        return modelMovieViewMutableLiveData;
+    }
+
+    public MovieDataSource(ApiInterface apiInterface, CompositeDisposable compositeDisposable) {
         this.apiInterface = apiInterface;
+        this.compositeDisposable = compositeDisposable;
     }
 
     @Override
     public void loadInitial(@NonNull LoadInitialParams params, @NonNull final LoadInitialCallback callback) {
-        apiInterface.getModelFilms(apiKey,1).enqueue(new Callback<ModelFilm>() {
-            @Override
-            public void onResponse(@NonNull Call<ModelFilm> call, @NonNull Response<ModelFilm> response) {
-                assert response.body() != null;
-                callback.onResult(response.body().getResults(),null,(long)2);
-                Log.d("TAG_MOVIE_DATA_SOURCE", "onResponse: "+response.body().getResults().size());
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ModelFilm> call, @NonNull Throwable t) {
-                Log.e("TAG_MOVIE_DATA_SOURCE", "onResponse: "+t.getLocalizedMessage());
-            }
-        });
+        modelMovieViewMutableLiveData.postValue(new ModelMovieView(true,null,null));
+        modelMovieViewMutableLiveDataNextPage.postValue(new ModelMovieView(true,null,null));
+        compositeDisposable.add(apiInterface.getModelFilms(apiKey,1).subscribe(modelFilm -> {
+            setCompletableRetry(null);
+            modelMovieViewMutableLiveData.postValue(new ModelMovieView(false,null,null));
+            modelMovieViewMutableLiveDataNextPage.postValue(new ModelMovieView(false,null,null));
+            callback.onResult(modelFilm.results,null,(long)2);
+        }, throwable->{
+            modelMovieViewMutableLiveDataNextPage.postValue(new ModelMovieView(false,throwable.getLocalizedMessage(),null));
+            modelMovieViewMutableLiveData.postValue(new ModelMovieView(false,throwable.getLocalizedMessage(),null));
+        }));
     }
 
     @Override
@@ -42,18 +50,24 @@ public class MovieDataSource extends PageKeyedDataSource<Long, ModelFilm.Result>
 
     @Override
     public void loadAfter(@NonNull final LoadParams<Long> params, @NonNull final LoadCallback<Long, ModelFilm.Result> callback) {
-        apiInterface.getModelFilms(apiKey,params.key).enqueue(new Callback<ModelFilm>() {
-            @Override
-            public void onResponse(@NonNull Call<ModelFilm> call, @NonNull Response<ModelFilm> response) {
-                assert response.body() != null;
-                callback.onResult(response.body().getResults(),params.key+1);
-                Log.d("TAG_MOVIE_DATA_SOURCE", "onResponse: "+response.body().getResults().size());
-            }
+            modelMovieViewMutableLiveDataNextPage.postValue(new ModelMovieView(true,null,null));
+            compositeDisposable.add(apiInterface.getModelFilms(apiKey,params.key).subscribe(modelFilm -> {
+                setCompletableRetry(null);
+                modelMovieViewMutableLiveDataNextPage.postValue(new ModelMovieView(false,null,null));
+                callback.onResult(modelFilm.results, params.key +1);
+            }, throwable -> modelMovieViewMutableLiveDataNextPage.postValue(new ModelMovieView(true,throwable.getLocalizedMessage(),null))));
 
-            @Override
-            public void onFailure(@NonNull Call<ModelFilm> call, @NonNull Throwable t) {
-                Log.e("TAG_MOVIE_DATA_SOURCE", "onResponse: "+t.getLocalizedMessage());
-            }
-        });
+    }
+
+    public MutableLiveData<ModelMovieView> getModelMovieViewMutableLiveDataNextPage() {
+        return modelMovieViewMutableLiveDataNextPage;
+    }
+
+    private void setCompletableRetry(Action action){
+        if (action == null){
+            this.completableRetry = null;
+        }else {
+            this.completableRetry = Completable.fromAction(action);
+        }
     }
 }

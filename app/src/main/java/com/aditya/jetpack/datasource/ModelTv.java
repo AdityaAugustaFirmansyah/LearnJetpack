@@ -16,6 +16,15 @@ public class ModelTv implements Serializable, Cloneable {
         private String poster_path;
         private double popularity;
         private int id;
+        private ArrayList<Integer>genre_ids;
+
+        public ArrayList<Integer> getGenre_ids() {
+            return genre_ids;
+        }
+
+        public void setGenre_ids(ArrayList<Integer> genre_ids) {
+            this.genre_ids = genre_ids;
+        }
 
         public String getPoster_path() {
             return poster_path;

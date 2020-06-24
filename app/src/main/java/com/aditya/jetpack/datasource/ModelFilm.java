@@ -32,6 +32,15 @@ public class ModelFilm implements Serializable {
         private String title;
         private String poster_path;
         private int id;
+        private ArrayList<Integer>genre_ids;
+
+        public ArrayList<Integer> getGenre_ids() {
+            return genre_ids;
+        }
+
+        public void setGenre_ids(ArrayList<Integer> genre_ids) {
+            this.genre_ids = genre_ids;
+        }
 
         public int getId() {
             return id;

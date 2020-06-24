@@ -1,14 +1,14 @@
 package com.aditya.jetpack.model;
 
-import androidx.annotation.NonNull;
-
-public class ModelTvView implements Cloneable{
+public class ModelDetailTvState {
     private boolean loading;
     private String msgError;
+    private ModelDetailTv modelDetailTv;
 
-    public ModelTvView(boolean loading, String msgError) {
+    public ModelDetailTvState(boolean loading, String msgError, ModelDetailTv modelDetailTv) {
         this.loading = loading;
         this.msgError = msgError;
+        this.modelDetailTv = modelDetailTv;
     }
 
     public boolean isLoading() {
@@ -27,10 +27,11 @@ public class ModelTvView implements Cloneable{
         this.msgError = msgError;
     }
 
+    public ModelDetailTv getModelDetailTv() {
+        return modelDetailTv;
+    }
 
-    @NonNull
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
+    public void setModelDetailTv(ModelDetailTv modelDetailTv) {
+        this.modelDetailTv = modelDetailTv;
     }
 }
