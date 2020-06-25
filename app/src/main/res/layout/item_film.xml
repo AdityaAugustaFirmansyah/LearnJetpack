@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
+        <import type="android.view.View"/>
         <variable
             name="dataFilm"
             type="com.aditya.jetpack.datasource.ModelFilm.Result" />
@@ -35,12 +36,11 @@
             text="@{dataFilm.title}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:textAlignment="center"
+            android:textColor="@android:color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/img_poster_film"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/img_poster_film"
             tools:layout_conversion_absoluteHeight="19dp"
             tools:layout_conversion_absoluteWidth="179dp" />
 
@@ -48,11 +48,36 @@
             android:id="@+id/tv_genre_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="49dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
-            android:textAlignment="center"
             app:layout_constraintStart_toEndOf="@+id/img_poster_film"
             app:layout_constraintTop_toBottomOf="@+id/tv_title_film" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/tv_genre_tv"
+            app:layout_constraintTop_toBottomOf="@+id/tv_genre_tv"
+            android:visibility="@{dataFilm.adult?View.VISIBLE:View.GONE}"
+            app:srcCompat="@drawable/ic_18_flat_icon" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:text="@{dataFilm.overview.substring(0,dataFilm.overview.length()/2)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/imageView5"
+            app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

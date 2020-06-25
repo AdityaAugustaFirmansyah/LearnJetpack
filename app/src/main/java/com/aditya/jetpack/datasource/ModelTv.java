@@ -13,10 +13,19 @@ public class ModelTv implements Serializable, Cloneable {
     public static class Result implements Serializable, Cloneable {
         private String original_name;
         private String name;
+        private String overview;
         private String poster_path;
         private double popularity;
         private int id;
         private ArrayList<Integer>genre_ids;
+
+        public String getOverview() {
+            return overview;
+        }
+
+        public void setOverview(String overview) {
+            this.overview = overview;
+        }
 
         public ArrayList<Integer> getGenre_ids() {
             return genre_ids;

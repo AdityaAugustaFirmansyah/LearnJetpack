@@ -7,8 +7,10 @@ import androidx.paging.PageKeyedDataSource;
 import com.aditya.jetpack.model.ModelMovieView;
 
 import io.reactivex.Completable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Action;
+import io.reactivex.schedulers.Schedulers;
 
 @SuppressWarnings("unchecked")
 public class MovieDataSource extends PageKeyedDataSource<Long, ModelFilm.Result> {
@@ -28,6 +30,16 @@ public class MovieDataSource extends PageKeyedDataSource<Long, ModelFilm.Result>
         this.compositeDisposable = compositeDisposable;
     }
 
+    public void retry(){
+        if (completableRetry!=null){
+            compositeDisposable.add(completableRetry.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(()->{
+
+            },throwable -> {
+                throw new Exception(throwable.getMessage());
+            }));
+        }
+    }
+
     @Override
     public void loadInitial(@NonNull LoadInitialParams params, @NonNull final LoadInitialCallback callback) {
         modelMovieViewMutableLiveData.postValue(new ModelMovieView(true,null,null));
@@ -38,6 +50,7 @@ public class MovieDataSource extends PageKeyedDataSource<Long, ModelFilm.Result>
             modelMovieViewMutableLiveDataNextPage.postValue(new ModelMovieView(false,null,null));
             callback.onResult(modelFilm.results,null,(long)2);
         }, throwable->{
+            setCompletableRetry(()->loadInitial(params,callback));
             modelMovieViewMutableLiveDataNextPage.postValue(new ModelMovieView(false,throwable.getLocalizedMessage(),null));
             modelMovieViewMutableLiveData.postValue(new ModelMovieView(false,throwable.getLocalizedMessage(),null));
         }));
@@ -55,7 +68,10 @@ public class MovieDataSource extends PageKeyedDataSource<Long, ModelFilm.Result>
                 setCompletableRetry(null);
                 modelMovieViewMutableLiveDataNextPage.postValue(new ModelMovieView(false,null,null));
                 callback.onResult(modelFilm.results, params.key +1);
-            }, throwable -> modelMovieViewMutableLiveDataNextPage.postValue(new ModelMovieView(true,throwable.getLocalizedMessage(),null))));
+            }, throwable -> {
+                setCompletableRetry(()->loadAfter(params,callback));
+                modelMovieViewMutableLiveDataNextPage.postValue(new ModelMovieView(true,throwable.getLocalizedMessage(),null));
+            }));
 
     }
 

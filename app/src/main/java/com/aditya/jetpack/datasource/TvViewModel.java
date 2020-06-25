@@ -54,4 +54,8 @@ public class TvViewModel extends AndroidViewModel {
     public LiveData<ArrayList<ModelGenre>>getModelGenreLiveData(){
         return genreRemoteDataSource.getModelGenresTvMutableLiveData();
     }
+
+    public void refresh(){
+        tvDataSourceFactory.getMovieDataSourceMutableLiveData().getValue().invalidate();
+    }
 }

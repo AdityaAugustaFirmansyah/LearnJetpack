@@ -72,6 +72,9 @@ public class MovieFragment extends Fragment {
     private void initSwipeRefresh(){
         movieViewModel.getModelMovieViewLiveData().observe(getViewLifecycleOwner(),modelMovieView -> {
             fragmentMovieBinding.layoutError.progressMovie.setVisibility(modelMovieView.isStatusLoading()?View.VISIBLE:View.GONE);
+            if (adapterRv.getCurrentList()!=null&&adapterRv.getCurrentList().size()>0){
+                fragmentMovieBinding.swipeRefreshMovie.setRefreshing(modelMovieView.isStatusLoading());
+            }
             if (modelMovieView.getMsgError()!=null){
                 fragmentMovieBinding.layoutError.imgBannerError.setVisibility(View.VISIBLE);
                 fragmentMovieBinding.layoutError.tvError.setText(modelMovieView.getMsgError());

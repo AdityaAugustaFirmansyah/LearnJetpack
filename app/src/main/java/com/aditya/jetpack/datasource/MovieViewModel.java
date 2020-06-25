@@ -52,8 +52,8 @@ public class MovieViewModel extends AndroidViewModel {
         dataSourceFactory.getMovieDataSourceMutableLiveData().getValue().invalidate();
     }
 
-    public LiveData<ModelMovieView> getRefreshState(){
-        return Transformations.switchMap(dataSourceFactory.getMovieDataSourceMutableLiveData(),MovieDataSource::getModelMovieViewMutableLiveData);
+    public void retry(){
+        dataSourceFactory.getMovieDataSourceMutableLiveData().getValue().retry();
     }
 
     public LiveData<ModelMovieView>getModeMovieNextPage(){
@@ -70,7 +70,4 @@ public class MovieViewModel extends AndroidViewModel {
         return genreRemoteDataSource.getModelGenresMovieMutableLiveData();
     }
 
-    public LiveData<ArrayList<ModelGenre>>getModelGenreTvLiveData(){
-        return genreRemoteDataSource.getModelGenresTvMutableLiveData();
-    }
 }

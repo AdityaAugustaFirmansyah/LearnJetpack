@@ -1,6 +1,7 @@
 package com.aditya.jetpack;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ public class TvFragment extends Fragment {
 
     FragmentMovieBinding fragmentMovieBinding;
     TvViewModel tvViewModel;
+    AdapterPageTv adapterPageTv;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,7 +46,12 @@ public class TvFragment extends Fragment {
 
     private void initNetworkState() {
         tvViewModel.getModelTvViewLiveData().observe(getViewLifecycleOwner(), modelTvView -> {
-           fragmentMovieBinding.layoutError.progressMovie.setVisibility(modelTvView.isLoading()?View.VISIBLE:View.GONE);
+           if (adapterPageTv.getCurrentList()!=null&&adapterPageTv.getCurrentList().size()>0){
+               fragmentMovieBinding.swipeRefreshMovie.setRefreshing(modelTvView.isLoading());
+           }else {
+               Log.d("TAG_LOADING_FRAGMENT", "initSwipeRefresh: "+modelTvView.isLoading());
+               fragmentMovieBinding.layoutError.progressMovie.setVisibility(modelTvView.isLoading()?View.VISIBLE:View.GONE);
+           }
            if (modelTvView.getMsgError()!=null){
                fragmentMovieBinding.layoutError.tvError.setText(modelTvView.getMsgError());
                fragmentMovieBinding.layoutError.imgBannerError.setVisibility(View.VISIBLE);
@@ -53,10 +60,13 @@ public class TvFragment extends Fragment {
                fragmentMovieBinding.layoutError.imgBannerError.setVisibility(View.GONE);
            }
         });
+        fragmentMovieBinding.swipeRefreshMovie.setOnRefreshListener(()->{
+            tvViewModel.refresh();
+        });
     }
 
     private void initRv() {
-        AdapterPageTv adapterPageTv = new AdapterPageTv();
+        adapterPageTv = new AdapterPageTv();
         fragmentMovieBinding.rvFilm.setAdapter(adapterPageTv);
         tvViewModel.getModelGenreLiveData().observe(getViewLifecycleOwner(),adapterPageTv::setModelGenres);
         tvViewModel.getListLiveData().observe(getViewLifecycleOwner(),adapterPageTv::submitList);
