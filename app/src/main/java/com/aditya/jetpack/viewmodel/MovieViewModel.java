@@ -1,4 +1,4 @@
-package com.aditya.jetpack.datasource;
+package com.aditya.jetpack.viewmodel;
 
 import android.app.Application;
 
@@ -9,6 +9,12 @@ import androidx.lifecycle.Transformations;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
+import com.aditya.jetpack.api.ApiClient;
+import com.aditya.jetpack.api.ApiInterface;
+import com.aditya.jetpack.datasource.DataSourceFactory;
+import com.aditya.jetpack.datasource.GenreRemoteDataSource;
+import com.aditya.jetpack.model.ModelFilm;
+import com.aditya.jetpack.datasource.MovieDataSource;
 import com.aditya.jetpack.model.ModelGenre;
 import com.aditya.jetpack.model.ModelMovieView;
 
@@ -45,7 +51,7 @@ public class MovieViewModel extends AndroidViewModel {
     }
 
     public LiveData<ModelMovieView> getModelMovieViewLiveData() {
-        return Transformations.switchMap(dataSourceFactory.getMovieDataSourceMutableLiveData(),MovieDataSource::getModelMovieViewMutableLiveData);
+        return Transformations.switchMap(dataSourceFactory.getMovieDataSourceMutableLiveData(), MovieDataSource::getModelMovieViewMutableLiveData);
     }
 
     public void refresh(){

@@ -16,7 +16,7 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".DetailFragment"
+        tools:context=".ui.DetailFragment"
         tools:ignore="UseCompoundDrawables">
 
         <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView

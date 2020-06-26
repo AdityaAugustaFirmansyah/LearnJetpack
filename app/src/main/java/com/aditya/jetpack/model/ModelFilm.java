@@ -1,4 +1,4 @@
-package com.aditya.jetpack.datasource;
+package com.aditya.jetpack.model;
 
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class ModelFilm implements Serializable {
 
-    ArrayList<Result>results;
+    private ArrayList<Result>results;
 
     public ArrayList<Result> getResults() {
         return results;

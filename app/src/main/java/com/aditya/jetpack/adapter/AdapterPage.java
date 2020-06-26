@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.aditya.jetpack.R;
 import com.aditya.jetpack.databinding.ItemFilmBinding;
-import com.aditya.jetpack.datasource.ModelFilm;
+import com.aditya.jetpack.model.ModelFilm;
 import com.aditya.jetpack.model.ModelGenre;
 import com.aditya.jetpack.model.ModelMovieView;
 

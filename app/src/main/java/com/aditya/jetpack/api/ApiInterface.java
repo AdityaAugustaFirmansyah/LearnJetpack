@@ -1,9 +1,11 @@
-package com.aditya.jetpack.datasource;
+package com.aditya.jetpack.api;
 
 import com.aditya.jetpack.model.ModelDetailMovie;
 import com.aditya.jetpack.model.ModelDetailTv;
+import com.aditya.jetpack.model.ModelFilm;
 import com.aditya.jetpack.model.ModelGenre;
 import com.aditya.jetpack.model.ModelResponseVideo;
+import com.aditya.jetpack.model.ModelTv;
 
 import io.reactivex.Single;
 import retrofit2.Call;
@@ -18,7 +20,7 @@ public interface ApiInterface {
     Single<ModelFilm> getModelFilms(@Query("api_key")String api_key, @Query("page")long page);
 
     @GET("tv/popular")
-    Single<ModelTv>getModelTv(@Query("api_key")String api_key,@Query("page")long page);
+    Single<ModelTv>getModelTv(@Query("api_key")String api_key, @Query("page")long page);
 
     @GET("genre/movie/list")
     Call<ModelGenre.ModelGenreResponse> getGenreMovie(@Query("api_key")String api_key);

@@ -7,7 +7,7 @@
         <import type="android.view.View"/>
         <variable
             name="dataFilm"
-            type="com.aditya.jetpack.datasource.ModelFilm.Result" />
+            type="com.aditya.jetpack.model.ModelFilm.Result" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

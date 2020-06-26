@@ -3,8 +3,8 @@ package com.aditya.jetpack.viewmodel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.aditya.jetpack.datasource.ApiClient;
-import com.aditya.jetpack.datasource.ApiInterface;
+import com.aditya.jetpack.api.ApiClient;
+import com.aditya.jetpack.api.ApiInterface;
 import com.aditya.jetpack.datasource.DetailRemoteDataSource;
 import com.aditya.jetpack.model.ModeDetailMovieState;
 import com.aditya.jetpack.model.ModelDetailTvState;

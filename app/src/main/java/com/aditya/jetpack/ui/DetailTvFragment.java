@@ -1,4 +1,4 @@
-package com.aditya.jetpack;
+package com.aditya.jetpack.ui;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,8 +11,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.aditya.jetpack.R;
 import com.aditya.jetpack.databinding.FragmentDetailTvBinding;
-import com.aditya.jetpack.datasource.ModelTv;
+import com.aditya.jetpack.model.ModelTv;
 import com.aditya.jetpack.viewmodel.ViewModelDetailMovie;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
@@ -27,7 +28,7 @@ public class DetailTvFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        detailTvBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_detail_tv,container,false);
+        detailTvBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail_tv,container,false);
         result = (ModelTv.Result) (getArguments() != null ? getArguments().getSerializable("TAG_MODEL_1") : null);
 //        detailTvBinding.setData(result);
         return detailTvBinding.getRoot();

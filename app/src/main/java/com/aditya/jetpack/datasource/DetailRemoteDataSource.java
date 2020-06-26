@@ -4,6 +4,8 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.aditya.jetpack.api.ApiClient;
+import com.aditya.jetpack.api.ApiInterface;
 import com.aditya.jetpack.model.ModeDetailMovieState;
 import com.aditya.jetpack.model.ModelDetailTvState;
 import com.aditya.jetpack.model.ModelViewTrailerState;
@@ -23,7 +25,7 @@ public class DetailRemoteDataSource {
 
     public void getDetailMovie(int movieId){
         modeDetailMovieStateMutableLiveData.postValue(new ModeDetailMovieState(true,null,null));
-        apiInterface.getDetailsMovie(movieId,ApiClient.API_KEY).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(modelDetailMovie -> {
+        apiInterface.getDetailsMovie(movieId, ApiClient.API_KEY).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(modelDetailMovie -> {
             modeDetailMovieStateMutableLiveData.postValue(new ModeDetailMovieState(false,null,modelDetailMovie.body()));
         },throwable -> {
             modeDetailMovieStateMutableLiveData.postValue(new ModeDetailMovieState(false,throwable.getLocalizedMessage(),null));

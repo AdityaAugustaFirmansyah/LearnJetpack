@@ -3,8 +3,6 @@ package com.aditya.jetpack.model;
 import androidx.annotation.NonNull;
 import androidx.paging.PagedList;
 
-import com.aditya.jetpack.datasource.ModelFilm;
-
 public class ModelMovieView implements Cloneable{
     boolean statusLoading;
     String msgError;

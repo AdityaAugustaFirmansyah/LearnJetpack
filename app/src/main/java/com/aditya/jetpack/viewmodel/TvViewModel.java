@@ -1,4 +1,4 @@
-package com.aditya.jetpack.datasource;
+package com.aditya.jetpack.viewmodel;
 
 import android.app.Application;
 
@@ -9,6 +9,12 @@ import androidx.lifecycle.Transformations;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
+import com.aditya.jetpack.api.ApiClient;
+import com.aditya.jetpack.api.ApiInterface;
+import com.aditya.jetpack.datasource.GenreRemoteDataSource;
+import com.aditya.jetpack.model.ModelTv;
+import com.aditya.jetpack.datasource.TvDataSource;
+import com.aditya.jetpack.datasource.TvDataSourceFactory;
 import com.aditya.jetpack.model.ModelGenre;
 import com.aditya.jetpack.model.ModelTvView;
 
@@ -44,7 +50,7 @@ public class TvViewModel extends AndroidViewModel {
     }
 
     public LiveData<ModelTvView> getModelTvViewLiveData() {
-        return Transformations.switchMap(tvDataSourceFactory.getMovieDataSourceMutableLiveData(),TvDataSource::getLoadInitial);
+        return Transformations.switchMap(tvDataSourceFactory.getMovieDataSourceMutableLiveData(), TvDataSource::getLoadInitial);
     }
 
     public LiveData<ModelTvView> getNetworkStateLiveData() {

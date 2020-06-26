@@ -1,4 +1,4 @@
-package com.aditya.jetpack.datasource;
+package com.aditya.jetpack.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;

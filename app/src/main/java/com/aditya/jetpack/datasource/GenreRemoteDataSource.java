@@ -2,6 +2,8 @@ package com.aditya.jetpack.datasource;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.aditya.jetpack.api.ApiClient;
+import com.aditya.jetpack.api.ApiInterface;
 import com.aditya.jetpack.model.ModelGenre;
 
 import java.util.ArrayList;

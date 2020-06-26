@@ -1,4 +1,4 @@
-package com.aditya.jetpack;
+package com.aditya.jetpack.ui;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -8,15 +8,15 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.aditya.jetpack.R;
 import com.aditya.jetpack.adapter.AdapterPageTv;
 import com.aditya.jetpack.databinding.FragmentMovieBinding;
-import com.aditya.jetpack.datasource.TvViewModel;
+import com.aditya.jetpack.viewmodel.TvViewModel;
 
 import java.util.Objects;
 
@@ -29,8 +29,7 @@ public class TvFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).show();
-        fragmentMovieBinding = DataBindingUtil.inflate(getLayoutInflater(),R.layout.fragment_movie,container,false);
+        fragmentMovieBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_movie,container,false);
         View view = fragmentMovieBinding.getRoot();
         fragmentMovieBinding.rvFilm.setLayoutManager(new LinearLayoutManager(view.getContext()));
         return view;

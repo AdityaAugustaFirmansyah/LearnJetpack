@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.PageKeyedDataSource;
 
+import com.aditya.jetpack.api.ApiInterface;
+import com.aditya.jetpack.model.ModelFilm;
 import com.aditya.jetpack.model.ModelMovieView;
 
 import io.reactivex.Completable;
@@ -48,7 +50,7 @@ public class MovieDataSource extends PageKeyedDataSource<Long, ModelFilm.Result>
             setCompletableRetry(null);
             modelMovieViewMutableLiveData.postValue(new ModelMovieView(false,null,null));
             modelMovieViewMutableLiveDataNextPage.postValue(new ModelMovieView(false,null,null));
-            callback.onResult(modelFilm.results,null,(long)2);
+            callback.onResult(modelFilm.getResults(),null,(long)2);
         }, throwable->{
             setCompletableRetry(()->loadInitial(params,callback));
             modelMovieViewMutableLiveDataNextPage.postValue(new ModelMovieView(false,throwable.getLocalizedMessage(),null));
@@ -67,7 +69,7 @@ public class MovieDataSource extends PageKeyedDataSource<Long, ModelFilm.Result>
             compositeDisposable.add(apiInterface.getModelFilms(apiKey,params.key).subscribe(modelFilm -> {
                 setCompletableRetry(null);
                 modelMovieViewMutableLiveDataNextPage.postValue(new ModelMovieView(false,null,null));
-                callback.onResult(modelFilm.results, params.key +1);
+                callback.onResult(modelFilm.getResults(), params.key +1);
             }, throwable -> {
                 setCompletableRetry(()->loadAfter(params,callback));
                 modelMovieViewMutableLiveDataNextPage.postValue(new ModelMovieView(true,throwable.getLocalizedMessage(),null));

@@ -16,12 +16,12 @@ import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.aditya.jetpack.BaseFragmentDirections;
-import com.aditya.jetpack.datasource.ModelTv;
 import com.aditya.jetpack.R;
 import com.aditya.jetpack.databinding.ItemTvBinding;
 import com.aditya.jetpack.model.ModelGenre;
+import com.aditya.jetpack.model.ModelTv;
 import com.aditya.jetpack.model.ModelTvView;
+import com.aditya.jetpack.ui.BaseFragmentDirections;
 
 import java.util.ArrayList;
 import java.util.Objects;

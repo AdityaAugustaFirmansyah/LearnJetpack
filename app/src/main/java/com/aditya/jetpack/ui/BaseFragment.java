@@ -1,4 +1,4 @@
-package com.aditya.jetpack;
+package com.aditya.jetpack.ui;
 
 
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import com.aditya.jetpack.R;
 import com.aditya.jetpack.databinding.FragmentBaseBinding;
 import com.aditya.jetpack.helper.BottomNavigationBehavior;
 
@@ -27,8 +28,8 @@ public class BaseFragment extends Fragment {
 
     FragmentBaseBinding fragmentBaseBinding;
     private static final String TAG_FRAGMENT_FILM = "TAG_FRAGMENT_FILM";
-    private MovieFragment movieFragment = new MovieFragment();
-    private TvFragment tvFragment = new TvFragment();
+    private BaseMovieFragment movieFragment = new BaseMovieFragment();
+    private BaseTvFragment tvFragment = new BaseTvFragment();
     private static final String TAG_FRAGMENT_TV = "TAG_FRAGMENT_TV";
     private String activeFragment =TAG_FRAGMENT_FILM;
     public BaseFragment() {
@@ -39,7 +40,7 @@ public class BaseFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        fragmentBaseBinding = DataBindingUtil.inflate(getLayoutInflater(),R.layout.fragment_base,container,false);
+        fragmentBaseBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_base,container,false);
         return fragmentBaseBinding.getRoot();
     }
 
@@ -53,10 +54,10 @@ public class BaseFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         if (savedInstanceState!=null){
             if (Objects.equals(savedInstanceState.getString("TAG_FRAGMENT"), TAG_FRAGMENT_FILM)){
-                movieFragment = (MovieFragment) getChildFragmentManager().findFragmentByTag(TAG_FRAGMENT_FILM);
+                movieFragment = (BaseMovieFragment) getChildFragmentManager().findFragmentByTag(TAG_FRAGMENT_FILM);
                 activeFragment = TAG_FRAGMENT_FILM;
             }else {
-                tvFragment = (TvFragment) getChildFragmentManager().findFragmentByTag(TAG_FRAGMENT_TV);
+                tvFragment = (BaseTvFragment) getChildFragmentManager().findFragmentByTag(TAG_FRAGMENT_TV);
                 activeFragment = TAG_FRAGMENT_TV;
             }
         }else {
@@ -75,10 +76,10 @@ public class BaseFragment extends Fragment {
 
         fragmentBaseBinding.bottomNavigation.setOnNavigationItemSelectedListener(menuItem -> {
             if (menuItem.getItemId() == R.id.item_film){
-                getChildFragmentManager().beginTransaction().replace(fragmentBaseBinding.containerFrame.getId(),movieFragment,TAG_FRAGMENT_FILM).commit();
+                getChildFragmentManager().beginTransaction().replace(fragmentBaseBinding.containerFrame.getId(),new BaseMovieFragment(),TAG_FRAGMENT_FILM).commit();
                 activeFragment = TAG_FRAGMENT_FILM;
             }else {
-                getChildFragmentManager().beginTransaction().replace(fragmentBaseBinding.containerFrame.getId(),tvFragment,TAG_FRAGMENT_TV).commit();
+                getChildFragmentManager().beginTransaction().replace(fragmentBaseBinding.containerFrame.getId(),new BaseTvFragment(),TAG_FRAGMENT_TV).commit();
                 activeFragment = TAG_FRAGMENT_TV;
             }
             return true;

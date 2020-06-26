@@ -6,7 +6,7 @@
     app:startDestination="@id/baseFragment2">
     <fragment
         android:id="@+id/baseFragment2"
-        android:name="com.aditya.jetpack.BaseFragment"
+        android:name="com.aditya.jetpack.ui.BaseFragment"
         android:label="fragment_base"
         tools:layout="@layout/fragment_base" >
         <action
@@ -18,22 +18,22 @@
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.aditya.jetpack.DetailFragment"
+        android:name="com.aditya.jetpack.ui.DetailFragment"
         android:label="fragment_detail"
         tools:layout="@layout/fragment_detail" >
         <argument
             android:name="TAG_MODEL"
-            app:argType="com.aditya.jetpack.datasource.ModelFilm$Result"
+            app:argType="com.aditya.jetpack.model.ModelFilm$Result"
             app:nullable="true"/>
     </fragment>
     <fragment
         android:id="@+id/detailTvFragment"
-        android:name="com.aditya.jetpack.DetailTvFragment"
+        android:name="com.aditya.jetpack.ui.DetailTvFragment"
         android:label="fragment_detail_tv"
         tools:layout="@layout/fragment_detail_tv" >
         <argument
             android:name="TAG_MODEL_1"
-            app:argType="com.aditya.jetpack.datasource.ModelTv$Result"
+            app:argType="com.aditya.jetpack.model.ModelTv$Result"
             app:nullable="true"/>
     </fragment>
 </navigation>

@@ -1,4 +1,4 @@
-package com.aditya.jetpack;
+package com.aditya.jetpack.ui;
 
 
 import android.os.Bundle;
@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -16,9 +15,10 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.aditya.jetpack.R;
 import com.aditya.jetpack.adapter.AdapterPage;
 import com.aditya.jetpack.databinding.FragmentMovieBinding;
-import com.aditya.jetpack.datasource.MovieViewModel;
+import com.aditya.jetpack.viewmodel.MovieViewModel;
 
 import java.util.Objects;
 
@@ -36,8 +36,7 @@ public class MovieFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
-        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).show();
-        fragmentMovieBinding = DataBindingUtil.inflate(getLayoutInflater(),R.layout.fragment_movie,container,false);
+        fragmentMovieBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_movie,container,false);
 
         View view = fragmentMovieBinding.getRoot();
         fragmentMovieBinding.rvFilm.setLayoutManager(new LinearLayoutManager(getContext()));

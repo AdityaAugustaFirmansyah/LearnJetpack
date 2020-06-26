@@ -1,4 +1,4 @@
-package com.aditya.jetpack;
+package com.aditya.jetpack.ui;
 
 
 import android.os.Bundle;
@@ -13,8 +13,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.aditya.jetpack.R;
 import com.aditya.jetpack.databinding.FragmentDetailBinding;
-import com.aditya.jetpack.datasource.ModelFilm;
+import com.aditya.jetpack.model.ModelFilm;
 import com.aditya.jetpack.viewmodel.ViewModelDetailMovie;
 import com.google.android.youtube.player.YouTubePlayerFragment;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
@@ -39,7 +40,7 @@ public class DetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar()).hide();
-        fragmentDetailBinding = DataBindingUtil.inflate(getLayoutInflater(),R.layout.fragment_detail,container,false);
+        fragmentDetailBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_detail,container,false);
 
 
         if (getArguments()!=null&& getArguments().getSerializable("TAG_MODEL") !=null) {

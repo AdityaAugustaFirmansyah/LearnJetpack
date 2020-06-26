@@ -1,8 +1,10 @@
-package com.aditya.jetpack;
+package com.aditya.jetpack.ui;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.aditya.jetpack.R;
 
 public class MainActivity extends AppCompatActivity {
 
