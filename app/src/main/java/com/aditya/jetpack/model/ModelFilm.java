@@ -4,6 +4,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.databinding.BindingAdapter;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import com.bumptech.glide.Glide;
 
@@ -28,9 +30,11 @@ public class ModelFilm implements Serializable {
         Glide.with(imageView.getContext()).load("https://image.tmdb.org/t/p/w500"+imgUrl).into(imageView);
     }
 
+    @Entity
     public static class Result implements Serializable,Cloneable{
         private String title;
         private String poster_path;
+        @PrimaryKey
         private int id;
         private String original_language;
         private String original_title;
