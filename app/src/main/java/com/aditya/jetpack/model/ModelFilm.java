@@ -30,6 +30,7 @@ public class ModelFilm implements Serializable {
         Glide.with(imageView.getContext()).load("https://image.tmdb.org/t/p/w500"+imgUrl).into(imageView);
     }
 
+
     @Entity
     public static class Result implements Serializable,Cloneable{
         private String title;
@@ -46,6 +47,7 @@ public class ModelFilm implements Serializable {
         private boolean adult;
         private String vote_count;
         private String overview;
+
         private ArrayList<Integer>genre_ids;
 
         public String getOverview() {

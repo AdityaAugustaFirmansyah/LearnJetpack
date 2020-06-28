@@ -17,7 +17,6 @@ import com.aditya.jetpack.R;
 import com.aditya.jetpack.databinding.FragmentDetailBinding;
 import com.aditya.jetpack.model.ModelFilm;
 import com.aditya.jetpack.viewmodel.ViewModelDetailMovie;
-import com.google.android.youtube.player.YouTubePlayerFragment;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 
@@ -29,11 +28,8 @@ import java.util.Objects;
  */
 public class DetailFragment extends Fragment {
 
-    private ViewModelDetailMovie viewModelDetailMovie;
     private int movieId = 0;
     private FragmentDetailBinding fragmentDetailBinding;
-    private YouTubePlayerFragment youTubePlayerSupportFragment;
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -54,19 +50,17 @@ public class DetailFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewModelDetailMovie = ViewModelProviders.of(getActivity()).get(ViewModelDetailMovie.class);
+        ViewModelDetailMovie viewModelDetailMovie = ViewModelProviders.of(getActivity()).get(ViewModelDetailMovie.class);
         if (movieId>0){
             viewModelDetailMovie.getTrailer(movieId);
             viewModelDetailMovie.getDetailMovie(movieId);
         }
-        viewModelDetailMovie.getModeDetailMovieStateMutableLiveData().observe(getViewLifecycleOwner(), modeDetailMovieState -> {
-            fragmentDetailBinding.setData(modeDetailMovieState.getModelDetailMovie());
-        });
-        viewModelDetailMovie.getModelViewTrailerStateLiveData().observe(getViewLifecycleOwner(),modelViewTrailerState -> {
+        viewModelDetailMovie.getModeDetailMovieStateMutableLiveData().observe(getViewLifecycleOwner(), modeDetailMovieState -> fragmentDetailBinding.setData(modeDetailMovieState.getModelDetailMovie()));
+        viewModelDetailMovie.getModelViewTrailerStateLiveData().observe(getViewLifecycleOwner(), modelViewTrailerState -> {
             getLifecycle().addObserver(fragmentDetailBinding.youTubePlayerView);
             fragmentDetailBinding.youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
                 @Override
-                public void onReady(YouTubePlayer youTubePlayer) {
+                public void onReady(@NonNull YouTubePlayer youTubePlayer) {
                     super.onReady(youTubePlayer);
                     if (modelViewTrailerState.getModelResponseVideo()!=null&&modelViewTrailerState.getModelResponseVideo().getKey()!=null){
                         youTubePlayer.loadVideo(modelViewTrailerState.getModelResponseVideo().getKey(),0);
