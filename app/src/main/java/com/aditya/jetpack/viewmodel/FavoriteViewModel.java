@@ -38,4 +38,8 @@ public class FavoriteViewModel extends AndroidViewModel {
     public LiveData<ModelFilm.Result> getResultLiveData(int id) {
         return movieFavoriteDataSource.getResultLiveData(id);
     }
+
+    public void deleteFavoriteMovie(ModelFilm.Result result){
+        movieFavoriteDataSource.deleteFavoriteMovie(result);
+    }
 }

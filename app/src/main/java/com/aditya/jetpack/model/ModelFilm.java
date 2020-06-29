@@ -35,7 +35,7 @@ public class ModelFilm implements Serializable {
     public static class Result implements Serializable,Cloneable{
         private String title;
         private String poster_path;
-        @PrimaryKey
+        @PrimaryKey(autoGenerate = true)
         private int id;
         private String original_language;
         private String original_title;

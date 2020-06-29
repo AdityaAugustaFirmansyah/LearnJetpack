@@ -28,9 +28,9 @@ public class BaseFragment extends Fragment {
 
     FragmentBaseBinding fragmentBaseBinding;
     private static final String TAG_FRAGMENT_FILM = "TAG_FRAGMENT_FILM";
-    private BaseFilmFragment movieFragment = new BaseFilmFragment();
-    private BaseFavoriteFragment tvFragment = new BaseFavoriteFragment();
-    private static final String TAG_FRAGMENT_TV = "TAG_FRAGMENT_TV";
+    private BaseFilmFragment baseFilmFragment = new BaseFilmFragment();
+    private BaseFavoriteFragment baseFavoriteFragment = new BaseFavoriteFragment();
+    private static final String TAG_FRAGMENT_FAVORITE = "TAG_FRAGMENT_FAVORITE";
     private String activeFragment =TAG_FRAGMENT_FILM;
     public BaseFragment() {
         // Required empty public constructor
@@ -47,27 +47,21 @@ public class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-    }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
         if (savedInstanceState!=null){
             if (Objects.equals(savedInstanceState.getString("TAG_FRAGMENT"), TAG_FRAGMENT_FILM)){
-                movieFragment = (BaseFilmFragment) getChildFragmentManager().findFragmentByTag(TAG_FRAGMENT_FILM);
                 activeFragment = TAG_FRAGMENT_FILM;
             }else {
-                tvFragment = (BaseFavoriteFragment) getChildFragmentManager().findFragmentByTag(TAG_FRAGMENT_TV);
-                activeFragment = TAG_FRAGMENT_TV;
+                activeFragment = TAG_FRAGMENT_FAVORITE;
             }
         }else {
-            Log.d("TAG_POSITION_FRAGMENT", "onActivityCreated: "+(movieFragment!=null&&!movieFragment.isInLayout())+" "+!tvFragment.isInLayout());
-            if (movieFragment!=null&&!movieFragment.isInLayout()&& activeFragment.equals(TAG_FRAGMENT_FILM)){
-                getChildFragmentManager().beginTransaction().replace(fragmentBaseBinding.containerFrame.getId(),movieFragment,TAG_FRAGMENT_FILM).commit();
+            Log.d("TAG_POSITION_FRAGMENT", "onActivityCreated: "+(baseFilmFragment !=null&&!baseFilmFragment.isInLayout())+" "+!baseFavoriteFragment.isInLayout());
+            if (baseFilmFragment !=null&&!baseFilmFragment.isInLayout()&& activeFragment.equals(TAG_FRAGMENT_FILM)){
+                getChildFragmentManager().beginTransaction().replace(fragmentBaseBinding.containerFrame.getId(),new BaseFilmFragment(),TAG_FRAGMENT_FILM).commit();
                 activeFragment = TAG_FRAGMENT_FILM;
-            }else if(tvFragment!=null&&!tvFragment.isInLayout()&&activeFragment.equals(TAG_FRAGMENT_TV)){
-                getChildFragmentManager().beginTransaction().replace(fragmentBaseBinding.containerFrame.getId(),tvFragment,TAG_FRAGMENT_TV).commit();
-                activeFragment = TAG_FRAGMENT_TV;
+            }else if(baseFavoriteFragment !=null&&!baseFavoriteFragment.isInLayout()&&activeFragment.equals(TAG_FRAGMENT_FAVORITE)){
+                getChildFragmentManager().beginTransaction().replace(fragmentBaseBinding.containerFrame.getId(),new BaseFavoriteFragment(), TAG_FRAGMENT_FAVORITE).commit();
+                activeFragment = TAG_FRAGMENT_FAVORITE;
             }
         }
 
@@ -79,11 +73,16 @@ public class BaseFragment extends Fragment {
                 getChildFragmentManager().beginTransaction().replace(fragmentBaseBinding.containerFrame.getId(),new BaseFilmFragment(),TAG_FRAGMENT_FILM).commit();
                 activeFragment = TAG_FRAGMENT_FILM;
             }else {
-                getChildFragmentManager().beginTransaction().replace(fragmentBaseBinding.containerFrame.getId(),new BaseFavoriteFragment(),TAG_FRAGMENT_TV).commit();
-                activeFragment = TAG_FRAGMENT_TV;
+                getChildFragmentManager().beginTransaction().replace(fragmentBaseBinding.containerFrame.getId(),new BaseFavoriteFragment(), TAG_FRAGMENT_FAVORITE).commit();
+                activeFragment = TAG_FRAGMENT_FAVORITE;
             }
             return true;
         });
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
     @Override

@@ -29,6 +29,10 @@ public class MovieFavoriteDataSource {
         AsyncTask.execute(() -> daoMovie.insertAll(result));
     }
 
+    public void deleteFavoriteMovie(ModelFilm.Result result){
+        AsyncTask.execute(() -> daoMovie.deleteMovieFavorite(result));
+    }
+
     public LiveData<ModelFilm.Result> getResultLiveData(int id) {
         return daoMovie.getMovieFavorite(id);
     }

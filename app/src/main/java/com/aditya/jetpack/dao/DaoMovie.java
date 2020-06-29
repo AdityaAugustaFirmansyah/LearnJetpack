@@ -3,6 +3,7 @@ package com.aditya.jetpack.dao;
 import androidx.lifecycle.LiveData;
 import androidx.paging.DataSource;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -19,4 +20,7 @@ public interface DaoMovie {
 
     @Query("SELECT * FROM result WHERE id =:id")
     LiveData<ModelFilm.Result> getMovieFavorite(int id);
+
+    @Delete
+    void deleteMovieFavorite(ModelFilm.Result result);
 }

@@ -70,7 +70,7 @@ public class DetailFragment extends Fragment {
                 }
             });
         });
-        fragmentDetailBinding.imgLove.setOnClickListener(view -> favoriteViewModel.insertFavoriteMovie(modelFilm));
+
         favoriteViewModel.getResultLiveData(movieId).observe(getViewLifecycleOwner(),result -> {
             Log.d("TAG_FAVORITE_MOVIE", "onActivityCreated: "+result);
             if (result!=null){
@@ -80,6 +80,13 @@ public class DetailFragment extends Fragment {
                 fragmentDetailBinding.imgLove.setImageResource(R.drawable.ic_baseline_favorite_border_24);
                 fragmentDetailBinding.tvLove.setText("Love");
             }
+            fragmentDetailBinding.imgLove.setOnClickListener(view -> {
+                if (result!=null){
+                    favoriteViewModel.deleteFavoriteMovie(result);
+                }else {
+                    favoriteViewModel.insertFavoriteMovie(this.modelFilm);
+                }
+            });
         });
     }
 
