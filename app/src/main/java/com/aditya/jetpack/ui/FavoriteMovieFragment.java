@@ -36,7 +36,7 @@ public class FavoriteMovieFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        favoriteViewModel = ViewModelProviders.of(getActivity()).get(FavoriteViewModel.class);
+        favoriteViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(FavoriteViewModel.class);
         initRv();
     }
 
