@@ -37,7 +37,7 @@
             android:contentDescription="@string/image"
             app:layout_constraintEnd_toStartOf="@+id/tv_detail_title_movie"
             app:layout_constraintStart_toStartOf="@+id/youTubePlayerView"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_love" />
 
         <TextView
             android:id="@+id/tv_detail_title_movie"
@@ -172,7 +172,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
         <ImageView
-            android:id="@+id/imageView6"
+            android:id="@+id/img_love"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -183,14 +183,14 @@
             app:srcCompat="@drawable/ic_baseline_favorite_border_24" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/tv_love"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="17dp"
             android:text="Love"
-            app:layout_constraintEnd_toEndOf="@+id/imageView6"
-            app:layout_constraintStart_toStartOf="@+id/imageView6"
-            app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+            app:layout_constraintEnd_toEndOf="@+id/img_love"
+            app:layout_constraintStart_toStartOf="@+id/img_love"
+            app:layout_constraintTop_toBottomOf="@+id/img_love" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -62,7 +62,7 @@ public class MovieFragment extends Fragment {
         fragmentMovieBinding.rvFilm.setAdapter(adapterRv);
         movieViewModel.getModelGenreMovieLiveData().observe(getViewLifecycleOwner(),modelGenres -> {
             adapterRv.setModelGenres(modelGenres);
-            adapterRv.notifyDataSetChanged();
+
         });
         movieViewModel.getListLiveDataPage().observe(getViewLifecycleOwner(), results -> adapterRv.submitList(results));
         movieViewModel.getModeMovieNextPage().observe(getViewLifecycleOwner(), adapterRv::setModelMovieView);
@@ -79,6 +79,7 @@ public class MovieFragment extends Fragment {
                 fragmentMovieBinding.layoutError.tvError.setText(modelMovieView.getMsgError());
             }else {
                 fragmentMovieBinding.layoutError.tvError.setText("");
+                fragmentMovieBinding.layoutError.imgBannerError.setVisibility(View.GONE);
             }
         });
         fragmentMovieBinding.swipeRefreshMovie.setOnRefreshListener(()->movieViewModel.refresh());

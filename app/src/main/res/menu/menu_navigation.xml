@@ -5,6 +5,6 @@
         android:title="@string/film"
         android:id="@+id/item_film"/>
     <item
-        android:title="@string/tv"
-        android:id="@+id/item_tv"/>
+        android:title="@string/favorite"
+        android:id="@+id/item_favorite"/>
 </menu>

@@ -34,7 +34,7 @@ public class MovieStatePagerAdapter extends FragmentStatePagerAdapter {
         if (position == 0){
             return "Movie";
         }else {
-            return "favorite";
+            return "Tv";
         }
     }
 }

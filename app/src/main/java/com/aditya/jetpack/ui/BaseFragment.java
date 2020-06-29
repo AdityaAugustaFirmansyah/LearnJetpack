@@ -28,8 +28,8 @@ public class BaseFragment extends Fragment {
 
     FragmentBaseBinding fragmentBaseBinding;
     private static final String TAG_FRAGMENT_FILM = "TAG_FRAGMENT_FILM";
-    private BaseMovieFragment movieFragment = new BaseMovieFragment();
-    private BaseTvFragment tvFragment = new BaseTvFragment();
+    private BaseFilmFragment movieFragment = new BaseFilmFragment();
+    private BaseFavoriteFragment tvFragment = new BaseFavoriteFragment();
     private static final String TAG_FRAGMENT_TV = "TAG_FRAGMENT_TV";
     private String activeFragment =TAG_FRAGMENT_FILM;
     public BaseFragment() {
@@ -54,10 +54,10 @@ public class BaseFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         if (savedInstanceState!=null){
             if (Objects.equals(savedInstanceState.getString("TAG_FRAGMENT"), TAG_FRAGMENT_FILM)){
-                movieFragment = (BaseMovieFragment) getChildFragmentManager().findFragmentByTag(TAG_FRAGMENT_FILM);
+                movieFragment = (BaseFilmFragment) getChildFragmentManager().findFragmentByTag(TAG_FRAGMENT_FILM);
                 activeFragment = TAG_FRAGMENT_FILM;
             }else {
-                tvFragment = (BaseTvFragment) getChildFragmentManager().findFragmentByTag(TAG_FRAGMENT_TV);
+                tvFragment = (BaseFavoriteFragment) getChildFragmentManager().findFragmentByTag(TAG_FRAGMENT_TV);
                 activeFragment = TAG_FRAGMENT_TV;
             }
         }else {
@@ -76,10 +76,10 @@ public class BaseFragment extends Fragment {
 
         fragmentBaseBinding.bottomNavigation.setOnNavigationItemSelectedListener(menuItem -> {
             if (menuItem.getItemId() == R.id.item_film){
-                getChildFragmentManager().beginTransaction().replace(fragmentBaseBinding.containerFrame.getId(),new BaseMovieFragment(),TAG_FRAGMENT_FILM).commit();
+                getChildFragmentManager().beginTransaction().replace(fragmentBaseBinding.containerFrame.getId(),new BaseFilmFragment(),TAG_FRAGMENT_FILM).commit();
                 activeFragment = TAG_FRAGMENT_FILM;
             }else {
-                getChildFragmentManager().beginTransaction().replace(fragmentBaseBinding.containerFrame.getId(),new BaseTvFragment(),TAG_FRAGMENT_TV).commit();
+                getChildFragmentManager().beginTransaction().replace(fragmentBaseBinding.containerFrame.getId(),new BaseFavoriteFragment(),TAG_FRAGMENT_TV).commit();
                 activeFragment = TAG_FRAGMENT_TV;
             }
             return true;

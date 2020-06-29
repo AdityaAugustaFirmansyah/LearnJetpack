@@ -17,7 +17,7 @@ import com.aditya.jetpack.databinding.FragmentBaseTvBinding;
 
 import java.util.ArrayList;
 
-public class BaseTvFragment extends Fragment {
+public class BaseFavoriteFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -29,7 +29,7 @@ public class BaseTvFragment extends Fragment {
                              Bundle savedInstanceState) {
         fragmentBaseTvBinding = DataBindingUtil.inflate(getLayoutInflater(),R.layout.fragment_base_tv, container, false);
         fragments.clear();
-        fragments.add(new TvFragment());
+        fragments.add(new FavoriteMovieFragment());
         fragments.add(new FavoriteTvFragment());
         return fragmentBaseTvBinding.getRoot();
     }

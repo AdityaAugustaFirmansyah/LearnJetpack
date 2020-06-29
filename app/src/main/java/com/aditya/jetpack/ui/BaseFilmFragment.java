@@ -17,7 +17,7 @@ import com.aditya.jetpack.adapter.MovieStatePagerAdapter;
 
 import java.util.ArrayList;
 
-public class BaseMovieFragment extends Fragment {
+public class BaseFilmFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -32,7 +32,7 @@ public class BaseMovieFragment extends Fragment {
         fragmentBaseMovieBinding = DataBindingUtil.inflate(getLayoutInflater(),R.layout.fragment_base_movie,container,false);
         fragments.clear();
         fragments.add(new MovieFragment());
-        fragments.add(new FavoriteMovieFragment());
+        fragments.add(new TvFragment());
         return fragmentBaseMovieBinding.getRoot();
     }
 

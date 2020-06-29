@@ -1,7 +1,6 @@
 package com.aditya.jetpack.ui;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,11 +44,9 @@ public class TvFragment extends Fragment {
 
     private void initNetworkState() {
         tvViewModel.getModelTvViewLiveData().observe(getViewLifecycleOwner(), modelTvView -> {
+            fragmentMovieBinding.layoutError.progressMovie.setVisibility(modelTvView.isLoading()?View.VISIBLE:View.GONE);
            if (adapterPageTv.getCurrentList()!=null&&adapterPageTv.getCurrentList().size()>0){
                fragmentMovieBinding.swipeRefreshMovie.setRefreshing(modelTvView.isLoading());
-           }else {
-               Log.d("TAG_LOADING_FRAGMENT", "initSwipeRefresh: "+modelTvView.isLoading());
-               fragmentMovieBinding.layoutError.progressMovie.setVisibility(modelTvView.isLoading()?View.VISIBLE:View.GONE);
            }
            if (modelTvView.getMsgError()!=null){
                fragmentMovieBinding.layoutError.tvError.setText(modelTvView.getMsgError());
@@ -59,9 +56,7 @@ public class TvFragment extends Fragment {
                fragmentMovieBinding.layoutError.imgBannerError.setVisibility(View.GONE);
            }
         });
-        fragmentMovieBinding.swipeRefreshMovie.setOnRefreshListener(()->{
-            tvViewModel.refresh();
-        });
+        fragmentMovieBinding.swipeRefreshMovie.setOnRefreshListener(()-> tvViewModel.refresh());
     }
 
     private void initRv() {

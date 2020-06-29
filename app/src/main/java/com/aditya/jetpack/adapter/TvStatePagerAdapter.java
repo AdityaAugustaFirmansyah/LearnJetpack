@@ -31,9 +31,9 @@ public class TvStatePagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         if (position == 1){
-            return "Tv";
+            return "Favorite Movie";
         }else {
-            return "Favorite";
+            return "Favorite Tv";
         }
     }
 }
