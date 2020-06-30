@@ -9,8 +9,9 @@ import androidx.room.TypeConverters;
 
 import com.aditya.jetpack.dao.DaoMovie;
 import com.aditya.jetpack.model.ModelFilm;
+import com.aditya.jetpack.model.ModelTv;
 
-@Database(entities = {ModelFilm.Result.class},version = 1,exportSchema = false)
+@Database(entities = {ModelFilm.Result.class, ModelTv.Result.class},version = 2,exportSchema = false)
 
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
@@ -23,7 +24,7 @@ public abstract class AppDatabase extends RoomDatabase {
         if (INSTANCE == null){
             synchronized (AppDatabase.class){
                 if (INSTANCE == null){
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),AppDatabase.class,"Movie.db").build();
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),AppDatabase.class,"Movie.db").fallbackToDestructiveMigration().build();
                 }
             }
         }

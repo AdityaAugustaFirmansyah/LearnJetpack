@@ -45,10 +45,6 @@ public class AdapterPage extends PagedListAdapter<ModelFilm.Result,RecyclerView.
         this.modelGenres.addAll(modelGenres);
     }
 
-    public ArrayList<ModelGenre> getModelGenres() {
-        return modelGenres;
-    }
-
     public  NavController navController;
     public static final String TAG_MODEL = "TAG_MODEL";
 
@@ -141,6 +137,7 @@ public class AdapterPage extends PagedListAdapter<ModelFilm.Result,RecyclerView.
                 bundle.putSerializable(TAG_MODEL,getItem(getAdapterPosition()));
                 navController.navigate(R.id.action_baseFragment2_to_detailFragment,bundle);
             });
+
             ArrayList<String>genreMovie = new ArrayList<>();
             for (ModelGenre modelGenre :modelGenres){
                 if (modelFilm.getGenre_ids().contains(modelGenre.getId())){

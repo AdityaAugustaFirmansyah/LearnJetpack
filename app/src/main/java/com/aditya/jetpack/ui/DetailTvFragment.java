@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.aditya.jetpack.R;
 import com.aditya.jetpack.databinding.FragmentDetailTvBinding;
 import com.aditya.jetpack.model.ModelTv;
+import com.aditya.jetpack.viewmodel.FavoriteViewModel;
 import com.aditya.jetpack.viewmodel.ViewModelDetailMovie;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
@@ -23,6 +24,7 @@ public class DetailTvFragment extends Fragment {
     ViewModelDetailMovie viewModelDetailMovie;
     ModelTv.Result result;
     FragmentDetailTvBinding detailTvBinding;
+    private FavoriteViewModel favoriteViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -40,6 +42,7 @@ public class DetailTvFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         viewModelDetailMovie = ViewModelProviders.of(getActivity()).get(ViewModelDetailMovie.class);
+        favoriteViewModel = ViewModelProviders.of(getActivity()).get(FavoriteViewModel.class);
 
         if (result.getId()>0){
             viewModelDetailMovie.getDetailTv(result.getId());
@@ -61,6 +64,16 @@ public class DetailTvFragment extends Fragment {
                     }
                 }
             });
+        });
+
+        favoriteViewModel.getTvResults(result.getId()).observe(getViewLifecycleOwner(),result1 -> {
+            if (result1!=null){
+                detailTvBinding.imgLove.setImageResource(R.drawable.ic_baseline_favorite_24);
+                detailTvBinding.imgLove.setOnClickListener(view -> favoriteViewModel.deleteFavoriteTv(result1));
+            }else {
+                detailTvBinding.imgLove.setImageResource(R.drawable.ic_baseline_favorite_border_24);
+                detailTvBinding.imgLove.setOnClickListener(view -> favoriteViewModel.insertFavoriteTvs(this.result));
+            }
         });
     }
 }

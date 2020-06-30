@@ -9,16 +9,19 @@ import androidx.paging.DataSource;
 import com.aditya.jetpack.dao.DaoMovie;
 import com.aditya.jetpack.helper.AppDatabase;
 import com.aditya.jetpack.model.ModelFilm;
+import com.aditya.jetpack.model.ModelTv;
 
 public class MovieFavoriteDataSource {
 
     private DaoMovie daoMovie;
     private DataSource.Factory<Integer,ModelFilm.Result> allResultsFavoriteMovie;
+    private DataSource.Factory<Integer, ModelTv.Result>allResultsFavoriteTvs;
 
     public MovieFavoriteDataSource(Context application){
         AppDatabase appDatabase = AppDatabase.getInstance(application);
         daoMovie = appDatabase.filmResultDao();
         allResultsFavoriteMovie = daoMovie.getAll();
+        allResultsFavoriteTvs = daoMovie.getAllTvs();
     }
 
     public DataSource.Factory<Integer,ModelFilm.Result> getAllResultsFavoriteMovie() {
@@ -35,5 +38,21 @@ public class MovieFavoriteDataSource {
 
     public LiveData<ModelFilm.Result> getResultLiveData(int id) {
         return daoMovie.getMovieFavorite(id);
+    }
+
+    public DataSource.Factory<Integer, ModelTv.Result> getAllResultsFavoriteTvs() {
+        return allResultsFavoriteTvs;
+    }
+
+    public void addFavoriteTv(ModelTv.Result... results){
+        AsyncTask.execute(() -> daoMovie.insertAllTvs(results));
+    }
+
+    public LiveData<ModelTv.Result> getTvFavorite(int id){
+        return daoMovie.getTvFavorite(id);
+    }
+
+    public void deleteFavoriteTv(ModelTv.Result... result){
+        AsyncTask.execute(()->daoMovie.deleteTv(result));
     }
 }

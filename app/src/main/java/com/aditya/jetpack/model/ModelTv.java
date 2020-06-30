@@ -1,5 +1,8 @@
 package com.aditya.jetpack.model;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -10,12 +13,14 @@ public class ModelTv implements Serializable, Cloneable {
         return results;
     }
 
+    @Entity(tableName = "resultTv")
     public static class Result implements Serializable, Cloneable {
         private String original_name;
         private String name;
         private String overview;
         private String poster_path;
         private double popularity;
+        @PrimaryKey(autoGenerate = true)
         private int id;
         private ArrayList<Integer>genre_ids;
 

@@ -9,9 +9,11 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.aditya.jetpack.model.ModelFilm;
+import com.aditya.jetpack.model.ModelTv;
 
 @Dao
 public interface DaoMovie {
+
     @Query("SELECT * FROM result")
     DataSource.Factory<Integer,ModelFilm.Result> getAll();
 
@@ -23,4 +25,16 @@ public interface DaoMovie {
 
     @Delete
     void deleteMovieFavorite(ModelFilm.Result result);
+
+    @Query("SELECT * FROM resultTv")
+    DataSource.Factory<Integer, ModelTv.Result>getAllTvs();
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertAllTvs(ModelTv.Result... results);
+
+    @Query("SELECT * FROM resultTv WHERE id = :id")
+    LiveData<ModelTv.Result>getTvFavorite(int id);
+
+    @Delete
+    void deleteTv(ModelTv.Result... results);
 }
