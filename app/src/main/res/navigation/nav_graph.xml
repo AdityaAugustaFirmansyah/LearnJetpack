@@ -17,6 +17,9 @@
             android:id="@+id/action_baseFragment2_to_detailTvFragment"
             app:destination="@id/detailTvFragment"
             app:popUpTo="@id/baseFragment2" />
+        <action
+            android:id="@+id/action_baseFragment2_to_settingFragment"
+            app:destination="@id/settingFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
@@ -38,4 +41,8 @@
             app:argType="com.aditya.jetpack.model.ModelTv$Result"
             app:nullable="true"/>
     </fragment>
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.aditya.jetpack.ui.SettingFragment"
+        android:label="SettingFragment" />
 </navigation>

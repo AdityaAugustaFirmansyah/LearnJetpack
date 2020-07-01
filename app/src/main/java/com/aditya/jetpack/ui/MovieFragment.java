@@ -37,7 +37,6 @@ public class MovieFragment extends Fragment {
     public View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         fragmentMovieBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.fragment_movie,container,false);
-
         View view = fragmentMovieBinding.getRoot();
         fragmentMovieBinding.rvFilm.setLayoutManager(new LinearLayoutManager(getContext()));
         return view;
