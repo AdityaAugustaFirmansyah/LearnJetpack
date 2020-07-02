@@ -37,7 +37,6 @@
             android:text="@{data.name}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/img_poster_tv"
-            android:textColor="@android:color/black"
             app:layout_constraintTop_toTopOf="@+id/img_poster_tv"
             tools:layout_conversion_absoluteHeight="19dp"
             tools:layout_conversion_absoluteWidth="179dp" />
@@ -61,7 +60,6 @@
             android:text="@{data.overview.substring(0,data.overview.length()/2)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:textColor="@android:color/black"
             app:layout_constraintStart_toStartOf="@+id/tv_genre_tv"
             app:layout_constraintTop_toBottomOf="@+id/tv_genre_tv" />
 

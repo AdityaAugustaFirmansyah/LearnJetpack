@@ -1,5 +1,6 @@
 package com.aditya.jetpack.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +15,13 @@ import com.aditya.jetpack.R;
 import com.aditya.jetpack.databinding.FragmentSettingBinding;
 import com.aditya.jetpack.helper.TinyDB;
 
+import java.util.Objects;
+
 public class SettingFragment extends Fragment {
 
     private FragmentSettingBinding fragmentSettingBinding;
     private TinyDB tinyDB;
-    private String TAG_SWITCH_DARK = "TAG_SWITCH_DARK";
+    public static final String TAG_SWITCH_DARK = "TAG_SWITCH_DARK";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,16 +35,28 @@ public class SettingFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        fragmentSettingBinding.switch1.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b){
+                fragmentSettingBinding.switch1.setText("On");
+            }else {
+                fragmentSettingBinding.switch1.setText("Off");
+            }
+        });
+        fragmentSettingBinding.switch1.setChecked(tinyDB.getBoolean(TAG_SWITCH_DARK));
         fragmentSettingBinding.switch1.setOnCheckedChangeListener((compoundButton, b) -> {
             if (b){
                 fragmentSettingBinding.switch1.setText("On");
                 tinyDB.putBoolean(TAG_SWITCH_DARK, true);
+                Intent intent = Objects.requireNonNull(getActivity()).getIntent();
+                getActivity().finish();
+                getActivity().startActivity(intent);
             }else {
                 fragmentSettingBinding.switch1.setText("Off");
                 tinyDB.putBoolean(TAG_SWITCH_DARK, false);
+                Intent intent = Objects.requireNonNull(getActivity()).getIntent();
+                getActivity().finish();
+                getActivity().startActivity(intent);
             }
         });
-        fragmentSettingBinding.switch1.setChecked(tinyDB.getBoolean(TAG_SWITCH_DARK));
     }
 }
