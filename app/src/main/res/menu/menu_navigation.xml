@@ -3,8 +3,10 @@
 
     <item
         android:title="@string/film"
+        android:icon="@drawable/ic_baseline_local_movies_24"
         android:id="@+id/item_film"/>
     <item
         android:title="@string/favorite"
+        android:icon="@drawable/ic_baseline_favorite_24"
         android:id="@+id/item_favorite"/>
 </menu>
