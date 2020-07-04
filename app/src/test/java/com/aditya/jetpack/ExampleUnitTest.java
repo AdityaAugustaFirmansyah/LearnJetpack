@@ -5,7 +5,7 @@ import android.content.Context;
 import androidx.room.Room;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.aditya.jetpack.helper.AppDatabase;
+import com.aditya.jetpack.db.AppDatabase;
 import com.aditya.jetpack.model.ModelFilm;
 
 import org.junit.Before;

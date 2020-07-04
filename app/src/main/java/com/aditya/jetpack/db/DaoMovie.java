@@ -1,4 +1,4 @@
-package com.aditya.jetpack.dao;
+package com.aditya.jetpack.db;
 
 import androidx.lifecycle.LiveData;
 import androidx.paging.DataSource;

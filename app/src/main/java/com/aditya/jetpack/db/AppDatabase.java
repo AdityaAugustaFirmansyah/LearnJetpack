@@ -1,4 +1,4 @@
-package com.aditya.jetpack.helper;
+package com.aditya.jetpack.db;
 
 import android.content.Context;
 
@@ -7,7 +7,6 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-import com.aditya.jetpack.dao.DaoMovie;
 import com.aditya.jetpack.model.ModelFilm;
 import com.aditya.jetpack.model.ModelTv;
 

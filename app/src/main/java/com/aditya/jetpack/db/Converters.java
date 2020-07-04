@@ -1,4 +1,4 @@
-package com.aditya.jetpack.helper;
+package com.aditya.jetpack.db;
 
 import androidx.room.TypeConverter;
 

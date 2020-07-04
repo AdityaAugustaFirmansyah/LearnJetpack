@@ -6,8 +6,8 @@ import android.os.AsyncTask;
 import androidx.lifecycle.LiveData;
 import androidx.paging.DataSource;
 
-import com.aditya.jetpack.dao.DaoMovie;
-import com.aditya.jetpack.helper.AppDatabase;
+import com.aditya.jetpack.db.DaoMovie;
+import com.aditya.jetpack.db.AppDatabase;
 import com.aditya.jetpack.model.ModelFilm;
 import com.aditya.jetpack.model.ModelTv;
 
